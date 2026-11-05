@@ -1,0 +1,114 @@
+{
+  "about": "Context refs. valid: input parses to kind and id, and printing gives input back. invalid: refused. invalid_parts: no ref can be made from these parts.",
+  "valid": [
+    {
+      "input": "ctx://file/sales.xlsx",
+      "kind": "file",
+      "id": "sales.xlsx"
+    },
+    {
+      "input": "ctx://books/batch/b7",
+      "kind": "books",
+      "id": "batch/b7"
+    },
+    {
+      "input": "ctx://books/proposal/2551Q-2026Q3",
+      "kind": "books",
+      "id": "proposal/2551Q-2026Q3"
+    },
+    {
+      "input": "ctx://file/.hidden",
+      "kind": "file",
+      "id": ".hidden"
+    },
+    {
+      "input": "ctx://file/a..b",
+      "kind": "file",
+      "id": "a..b"
+    },
+    {
+      "input": "ctx://file/...",
+      "kind": "file",
+      "id": "..."
+    },
+    {
+      "input": "ctx://a_b-c/x_y-z.1",
+      "kind": "a_b-c",
+      "id": "x_y-z.1"
+    },
+    {
+      "input": "ctx://k/a/b/c/d/e",
+      "kind": "k",
+      "id": "a/b/c/d/e"
+    },
+    {
+      "input": "ctx://file/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "kind": "file",
+      "id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  ],
+  "invalid": [
+    "",
+    "ctx:",
+    "ctx://",
+    "ctx://file",
+    "ctx://file/",
+    "ctx:///a",
+    "CTX://file/a",
+    "Ctx://file/a",
+    "ctx:/file/a",
+    "ctx://File/a",
+    "ctx://1file/a",
+    "ctx://file//a",
+    "ctx://file/a/",
+    "ctx://file/a//b",
+    "ctx://file/.",
+    "ctx://file/..",
+    "ctx://file/../a",
+    "ctx://file/a/..",
+    "ctx://file/a/./b",
+    "ctx://file/a b",
+    "ctx://file/a?b=1",
+    "ctx://file/a#b",
+    "ctx://file/a%20b",
+    "ctx://file/a\n",
+    " ctx://file/a",
+    "ctx://file/a ",
+    "ctx://file/añb",
+    "file/a",
+    "http://file/a",
+    "ctx://kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk/a",
+    "ctx://file/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    null,
+    7,
+    [
+      "ctx://file/a"
+    ],
+    {
+      "kind": "file",
+      "id": "a"
+    }
+  ],
+  "invalid_parts": [
+    {
+      "kind": "a/b",
+      "id": "c"
+    },
+    {
+      "kind": "",
+      "id": "c"
+    },
+    {
+      "kind": "file",
+      "id": ""
+    },
+    {
+      "kind": "file",
+      "id": "../a"
+    },
+    {
+      "kind": "File",
+      "id": "a"
+    }
+  ]
+}

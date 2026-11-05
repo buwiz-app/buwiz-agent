@@ -1,0 +1,29 @@
+{
+  "name": "@buwiz/agent",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Shared types for Buwiz mini apps, generated from the Rust crate, with the small parsers and the press decision in TypeScript",
+  "license": "Apache-2.0",
+  "repository": "github:buwiz-app/buwiz-agent",
+  "files": [
+    "packages",
+    "vectors"
+  ],
+  "type": "module",
+  "exports": {
+    ".": "./packages/agent/src/index.ts",
+    "./schema": "./packages/agent/schema/buwiz-agent.schema.json"
+  },
+  "scripts": {
+    "check": "oxlint && oxfmt --check && tsc --noEmit",
+    "fmt": "oxfmt",
+    "test": "bun test"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.4.4",
+    "ajv": "8.17.1",
+    "oxfmt": "^0.75.0",
+    "oxlint": "^1.43.0",
+    "typescript": "^5.9.0"
+  }
+}

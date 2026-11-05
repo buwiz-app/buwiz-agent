@@ -1,0 +1,2800 @@
+{
+  "about": "Wire shapes. type: which shape; input: any JSON; valid: whether it parses; output: what printing gives, when not input itself. schema_allows: refused by both parsers, though JSON Schema cannot say so. All values are fakes.",
+  "cases": [
+    {
+      "name": "hello with 0 fields",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "hello"
+      },
+      "valid": true
+    },
+    {
+      "name": "revision with 0 fields",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "revision"
+      },
+      "valid": true
+    },
+    {
+      "name": "keybindings with 0 fields",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "keybindings"
+      },
+      "valid": true
+    },
+    {
+      "name": "shutdown with 0 fields",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "shutdown"
+      },
+      "valid": true
+    },
+    {
+      "name": "snapshot with 0 fields",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "snapshot"
+      },
+      "valid": true
+    },
+    {
+      "name": "snapshot with 3 fields",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "snapshot",
+        "since": 41,
+        "format": "compact",
+        "fingerprints": true
+      },
+      "valid": true
+    },
+    {
+      "name": "events with 0 fields",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "events"
+      },
+      "valid": true
+    },
+    {
+      "name": "events with 2 fields",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "events",
+        "since": 9,
+        "limit": 256
+      },
+      "valid": true
+    },
+    {
+      "name": "click with 1 fields",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "click",
+        "node": "ledger.post"
+      },
+      "valid": true
+    },
+    {
+      "name": "click with 3 fields",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "click",
+        "node": "ledger.post",
+        "delivery": "virtual",
+        "expect_fingerprint": "0123456789abcdef"
+      },
+      "valid": true
+    },
+    {
+      "name": "type with 2 fields",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "type",
+        "node": "memo",
+        "text": "fake memo"
+      },
+      "valid": true
+    },
+    {
+      "name": "type with 4 fields",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "type",
+        "node": "memo",
+        "text": "fake memo",
+        "delivery": "virtual",
+        "expect_fingerprint": "0123456789abcdef"
+      },
+      "valid": true
+    },
+    {
+      "name": "set_value with 2 fields",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "set_value",
+        "node": "memo",
+        "value": "x"
+      },
+      "valid": true
+    },
+    {
+      "name": "set_value with 3 fields",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "set_value",
+        "node": "memo",
+        "value": "x",
+        "expect_fingerprint": "0123456789abcdef"
+      },
+      "valid": true
+    },
+    {
+      "name": "key with 2 fields",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "key",
+        "node": "memo",
+        "key": "enter"
+      },
+      "valid": true
+    },
+    {
+      "name": "key with 4 fields",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "key",
+        "node": "memo",
+        "key": "enter",
+        "delivery": "virtual",
+        "expect_fingerprint": "0123456789abcdef"
+      },
+      "valid": true
+    },
+    {
+      "name": "keybinding with 2 fields",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "keybinding",
+        "binding": "ledger::Post",
+        "scope": "focused"
+      },
+      "valid": true
+    },
+    {
+      "name": "keybinding with 5 fields",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "keybinding",
+        "binding": "ledger::Post",
+        "chord": "cmd-p",
+        "scope": "global",
+        "confirm": true,
+        "activate": true
+      },
+      "valid": true
+    },
+    {
+      "name": "assert with 1 fields",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "assert",
+        "node": "status.line"
+      },
+      "valid": true
+    },
+    {
+      "name": "assert with 8 fields",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "assert",
+        "node": "status.line",
+        "name": "Saved",
+        "value": "done",
+        "role": "status",
+        "checked": false,
+        "exists": true,
+        "visible": true,
+        "in_viewport": false
+      },
+      "valid": true
+    },
+    {
+      "name": "invoke with 1 fields",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "invoke",
+        "name": "ledger.refresh"
+      },
+      "valid": true
+    },
+    {
+      "name": "invoke with 2 fields",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "invoke",
+        "name": "ledger.refresh",
+        "args": {
+          "page": 2,
+          "filters": [
+            "a"
+          ],
+          "deep": {
+            "n": null
+          }
+        }
+      },
+      "valid": true
+    },
+    {
+      "name": "wait with 0 fields",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "wait"
+      },
+      "valid": true
+    },
+    {
+      "name": "wait with 1 fields",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "wait",
+        "timeout_ms": 5000
+      },
+      "valid": true
+    },
+    {
+      "name": "wait_until with 2 fields",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "wait_until",
+        "timeout_ms": 5000,
+        "until": {
+          "node": "status.line"
+        }
+      },
+      "valid": true
+    },
+    {
+      "name": "wait_until with 2 fields",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "wait_until",
+        "timeout_ms": 5000,
+        "until": {
+          "node": "status.line",
+          "name": "Saved",
+          "value": "done",
+          "role": "status",
+          "checked": false,
+          "exists": true,
+          "visible": true,
+          "in_viewport": false
+        }
+      },
+      "valid": true
+    },
+    {
+      "name": "screenshot with 0 fields",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "screenshot"
+      },
+      "valid": true
+    },
+    {
+      "name": "screenshot with 4 fields",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "screenshot",
+        "path": "shots/one.png",
+        "mode": "scrolled",
+        "node": "ledger.list",
+        "max_height_px": 4096
+      },
+      "valid": true
+    },
+    {
+      "name": "person caller and auth",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "click",
+        "node": "ledger.post",
+        "caller": {
+          "kind": "person",
+          "who": "person.owner"
+        },
+        "auth": "abababababababababababababababababababababababababababababababab"
+      },
+      "valid": true
+    },
+    {
+      "name": "agent caller with approval",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "click",
+        "node": "ledger.post",
+        "caller": {
+          "kind": "agent",
+          "who": "agent.broker",
+          "approval": {
+            "target": "books",
+            "action": "ledger.post",
+            "once": "press-0001",
+            "approved_by": "person.owner"
+          }
+        }
+      },
+      "valid": true
+    },
+    {
+      "name": "routine caller",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "snapshot",
+        "caller": {
+          "kind": "routine",
+          "who": "routine.month-end"
+        }
+      },
+      "valid": true
+    },
+    {
+      "name": "null optionals are dropped",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "snapshot",
+        "since": null,
+        "format": null,
+        "caller": null,
+        "auth": null
+      },
+      "valid": true,
+      "output": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "snapshot"
+      }
+    },
+    {
+      "name": "default delivery is dropped",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "click",
+        "node": "a",
+        "delivery": "semantic"
+      },
+      "valid": true,
+      "output": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "click",
+        "node": "a"
+      }
+    },
+    {
+      "name": "false confirm and activate are dropped",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "keybinding",
+        "binding": "b",
+        "scope": "focused",
+        "confirm": false,
+        "activate": false
+      },
+      "valid": true,
+      "output": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "keybinding",
+        "binding": "b",
+        "scope": "focused"
+      }
+    },
+    {
+      "name": "default mode is dropped",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "screenshot",
+        "mode": "viewport"
+      },
+      "valid": true,
+      "output": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "screenshot"
+      }
+    },
+    {
+      "name": "null args are dropped",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "invoke",
+        "name": "a",
+        "args": null
+      },
+      "valid": true,
+      "output": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "invoke",
+        "name": "a"
+      }
+    },
+    {
+      "name": "largest safe since",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "snapshot",
+        "since": 9007199254740991
+      },
+      "valid": true
+    },
+    {
+      "name": "an op alone",
+      "type": "Op",
+      "input": {
+        "op": "click",
+        "node": "ledger.post"
+      },
+      "valid": true
+    },
+    {
+      "name": "no v",
+      "type": "Envelope",
+      "input": {
+        "id": "m1",
+        "target": "books",
+        "op": "hello"
+      },
+      "valid": false
+    },
+    {
+      "name": "no id",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "target": "books",
+        "op": "hello"
+      },
+      "valid": false
+    },
+    {
+      "name": "no target",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "op": "hello"
+      },
+      "valid": false
+    },
+    {
+      "name": "no op",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books"
+      },
+      "valid": false
+    },
+    {
+      "name": "wrong version",
+      "type": "Envelope",
+      "input": {
+        "v": 2,
+        "id": "m1",
+        "target": "books",
+        "op": "hello"
+      },
+      "valid": false
+    },
+    {
+      "name": "version as text",
+      "type": "Envelope",
+      "input": {
+        "v": "1",
+        "id": "m1",
+        "target": "books",
+        "op": "hello"
+      },
+      "valid": false
+    },
+    {
+      "name": "bad target",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "Books",
+        "op": "hello"
+      },
+      "valid": false
+    },
+    {
+      "name": "null target",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": null,
+        "op": "hello"
+      },
+      "valid": false
+    },
+    {
+      "name": "unknown op",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "erase"
+      },
+      "valid": false
+    },
+    {
+      "name": "op in another case",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "Click",
+        "node": "a"
+      },
+      "valid": false
+    },
+    {
+      "name": "unknown field",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "hello",
+        "extra": 1
+      },
+      "valid": false
+    },
+    {
+      "name": "raw token field",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "hello",
+        "token": "fake-token"
+      },
+      "valid": false
+    },
+    {
+      "name": "unknown field on a field op",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "click",
+        "node": "a",
+        "approval": {
+          "target": "books",
+          "action": "ledger.post",
+          "once": "press-0001",
+          "approved_by": "person.owner"
+        }
+      },
+      "valid": false
+    },
+    {
+      "name": "node sent as target of the op",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "click"
+      },
+      "valid": false
+    },
+    {
+      "name": "bad node id",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "click",
+        "node": "Ledger Post"
+      },
+      "valid": false
+    },
+    {
+      "name": "null required field",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "click",
+        "node": null
+      },
+      "valid": false
+    },
+    {
+      "name": "null delivery",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "click",
+        "node": "a",
+        "delivery": null
+      },
+      "valid": false
+    },
+    {
+      "name": "unknown delivery",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "click",
+        "node": "a",
+        "delivery": "hid"
+      },
+      "valid": false
+    },
+    {
+      "name": "numeric fingerprint",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "click",
+        "node": "a",
+        "expect_fingerprint": 1311768467463790320
+      },
+      "valid": false
+    },
+    {
+      "name": "unsafe since",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "snapshot",
+        "since": 9007199254740992
+      },
+      "valid": false
+    },
+    {
+      "name": "negative since",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "snapshot",
+        "since": -1
+      },
+      "valid": false
+    },
+    {
+      "name": "fractional limit",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "events",
+        "limit": 1.5
+      },
+      "valid": false
+    },
+    {
+      "name": "limit past u32",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "events",
+        "limit": 4294967296
+      },
+      "valid": false,
+      "schema_allows": true
+    },
+    {
+      "name": "unknown field in until",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "wait_until",
+        "timeout_ms": 1,
+        "until": {
+          "node": "a",
+          "extra": true
+        }
+      },
+      "valid": false
+    },
+    {
+      "name": "field on an empty op",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "hello",
+        "node": "a"
+      },
+      "valid": false
+    },
+    {
+      "name": "field on an assert",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "assert",
+        "node": "a",
+        "extra": true
+      },
+      "valid": false
+    },
+    {
+      "name": "until left flat",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "wait_until",
+        "timeout_ms": 1,
+        "node": "a"
+      },
+      "valid": false
+    },
+    {
+      "name": "malformed caller",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "hello",
+        "caller": {
+          "kind": "robot",
+          "who": "agent.broker"
+        }
+      },
+      "valid": false
+    },
+    {
+      "name": "approval with a typo",
+      "type": "Envelope",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "op": "hello",
+        "caller": {
+          "kind": "agent",
+          "who": "agent.broker",
+          "aproval": {
+            "target": "books",
+            "action": "ledger.post",
+            "once": "press-0001",
+            "approved_by": "person.owner"
+          }
+        }
+      },
+      "valid": false
+    },
+    {
+      "name": "an array",
+      "type": "Envelope",
+      "input": [
+        {
+          "v": 1,
+          "id": "m1",
+          "target": "books",
+          "op": "hello"
+        }
+      ],
+      "valid": false
+    },
+    {
+      "name": "null",
+      "type": "Envelope",
+      "input": null,
+      "valid": false
+    },
+    {
+      "name": "small node",
+      "type": "UiNode",
+      "input": {
+        "id": "ledger.post",
+        "role": "button",
+        "name": "Post",
+        "enabled": true,
+        "focused": false,
+        "bounds": {
+          "x": 0,
+          "y": -4,
+          "w": 120,
+          "h": 32
+        }
+      },
+      "valid": true
+    },
+    {
+      "name": "full node",
+      "type": "UiNode",
+      "input": {
+        "id": "ledger.post",
+        "role": "button",
+        "name": "Post",
+        "enabled": true,
+        "focused": false,
+        "bounds": {
+          "x": 0,
+          "y": -4,
+          "w": 120,
+          "h": 32
+        },
+        "value": "x",
+        "checked": true,
+        "visible": false,
+        "states": [
+          "checked"
+        ],
+        "children": [
+          {
+            "id": "child.one",
+            "role": "button",
+            "name": "Post",
+            "enabled": true,
+            "focused": false,
+            "bounds": {
+              "x": 0,
+              "y": -4,
+              "w": 120,
+              "h": 32
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "visible true is dropped",
+      "type": "UiNode",
+      "input": {
+        "id": "ledger.post",
+        "role": "button",
+        "name": "Post",
+        "enabled": true,
+        "focused": false,
+        "bounds": {
+          "x": 0,
+          "y": -4,
+          "w": 120,
+          "h": 32
+        },
+        "visible": true
+      },
+      "valid": true,
+      "output": {
+        "id": "ledger.post",
+        "role": "button",
+        "name": "Post",
+        "enabled": true,
+        "focused": false,
+        "bounds": {
+          "x": 0,
+          "y": -4,
+          "w": 120,
+          "h": 32
+        }
+      }
+    },
+    {
+      "name": "empty lists are dropped",
+      "type": "UiNode",
+      "input": {
+        "id": "ledger.post",
+        "role": "button",
+        "name": "Post",
+        "enabled": true,
+        "focused": false,
+        "bounds": {
+          "x": 0,
+          "y": -4,
+          "w": 120,
+          "h": 32
+        },
+        "states": [],
+        "children": []
+      },
+      "valid": true,
+      "output": {
+        "id": "ledger.post",
+        "role": "button",
+        "name": "Post",
+        "enabled": true,
+        "focused": false,
+        "bounds": {
+          "x": 0,
+          "y": -4,
+          "w": 120,
+          "h": 32
+        }
+      }
+    },
+    {
+      "name": "no bounds",
+      "type": "UiNode",
+      "input": {
+        "id": "ledger.post",
+        "role": "button",
+        "name": "Post",
+        "enabled": true,
+        "focused": false
+      },
+      "valid": false
+    },
+    {
+      "name": "fractional bounds",
+      "type": "UiNode",
+      "input": {
+        "id": "ledger.post",
+        "role": "button",
+        "name": "Post",
+        "enabled": true,
+        "focused": false,
+        "bounds": {
+          "x": 0.5,
+          "y": 0,
+          "w": 1,
+          "h": 1
+        }
+      },
+      "valid": false
+    },
+    {
+      "name": "bounds past i32",
+      "type": "UiNode",
+      "input": {
+        "id": "ledger.post",
+        "role": "button",
+        "name": "Post",
+        "enabled": true,
+        "focused": false,
+        "bounds": {
+          "x": 2147483648,
+          "y": 0,
+          "w": 1,
+          "h": 1
+        }
+      },
+      "valid": false,
+      "schema_allows": true
+    },
+    {
+      "name": "null states",
+      "type": "UiNode",
+      "input": {
+        "id": "ledger.post",
+        "role": "button",
+        "name": "Post",
+        "enabled": true,
+        "focused": false,
+        "bounds": {
+          "x": 0,
+          "y": -4,
+          "w": 120,
+          "h": 32
+        },
+        "states": null
+      },
+      "valid": false
+    },
+    {
+      "name": "null visible",
+      "type": "UiNode",
+      "input": {
+        "id": "ledger.post",
+        "role": "button",
+        "name": "Post",
+        "enabled": true,
+        "focused": false,
+        "bounds": {
+          "x": 0,
+          "y": -4,
+          "w": 120,
+          "h": 32
+        },
+        "visible": null
+      },
+      "valid": false
+    },
+    {
+      "name": "unknown field",
+      "type": "UiNode",
+      "input": {
+        "id": "ledger.post",
+        "role": "button",
+        "name": "Post",
+        "enabled": true,
+        "focused": false,
+        "bounds": {
+          "x": 0,
+          "y": -4,
+          "w": 120,
+          "h": 32
+        },
+        "color": "red"
+      },
+      "valid": false
+    },
+    {
+      "name": "bad child",
+      "type": "UiNode",
+      "input": {
+        "id": "ledger.post",
+        "role": "button",
+        "name": "Post",
+        "enabled": true,
+        "focused": false,
+        "bounds": {
+          "x": 0,
+          "y": -4,
+          "w": 120,
+          "h": 32
+        },
+        "children": [
+          {
+            "id": "Bad Id",
+            "role": "button",
+            "name": "Post",
+            "enabled": true,
+            "focused": false,
+            "bounds": {
+              "x": 0,
+              "y": -4,
+              "w": 120,
+              "h": 32
+            }
+          }
+        ]
+      },
+      "valid": false
+    },
+    {
+      "name": "tree with a revision",
+      "type": "UiTree",
+      "input": {
+        "target": "books",
+        "platform": "desktop",
+        "ready": true,
+        "nodes": [
+          {
+            "id": "ledger.post",
+            "role": "button",
+            "name": "Post",
+            "enabled": true,
+            "focused": false,
+            "bounds": {
+              "x": 0,
+              "y": -4,
+              "w": 120,
+              "h": 32
+            },
+            "value": "x",
+            "checked": true,
+            "visible": false,
+            "states": [
+              "checked"
+            ],
+            "children": [
+              {
+                "id": "child.one",
+                "role": "button",
+                "name": "Post",
+                "enabled": true,
+                "focused": false,
+                "bounds": {
+                  "x": 0,
+                  "y": -4,
+                  "w": 120,
+                  "h": 32
+                }
+              }
+            ]
+          }
+        ],
+        "rev": 12
+      },
+      "valid": true
+    },
+    {
+      "name": "tree without one",
+      "type": "UiTree",
+      "input": {
+        "target": "books",
+        "platform": "headless",
+        "ready": false,
+        "nodes": []
+      },
+      "valid": true
+    },
+    {
+      "name": "no target",
+      "type": "UiTree",
+      "input": {
+        "platform": "desktop",
+        "ready": true,
+        "nodes": [
+          {
+            "id": "ledger.post",
+            "role": "button",
+            "name": "Post",
+            "enabled": true,
+            "focused": false,
+            "bounds": {
+              "x": 0,
+              "y": -4,
+              "w": 120,
+              "h": 32
+            },
+            "value": "x",
+            "checked": true,
+            "visible": false,
+            "states": [
+              "checked"
+            ],
+            "children": [
+              {
+                "id": "child.one",
+                "role": "button",
+                "name": "Post",
+                "enabled": true,
+                "focused": false,
+                "bounds": {
+                  "x": 0,
+                  "y": -4,
+                  "w": 120,
+                  "h": 32
+                }
+              }
+            ]
+          }
+        ],
+        "rev": 12
+      },
+      "valid": false
+    },
+    {
+      "name": "gpui-agent app field",
+      "type": "UiTree",
+      "input": {
+        "platform": "desktop",
+        "ready": true,
+        "nodes": [
+          {
+            "id": "ledger.post",
+            "role": "button",
+            "name": "Post",
+            "enabled": true,
+            "focused": false,
+            "bounds": {
+              "x": 0,
+              "y": -4,
+              "w": 120,
+              "h": 32
+            },
+            "value": "x",
+            "checked": true,
+            "visible": false,
+            "states": [
+              "checked"
+            ],
+            "children": [
+              {
+                "id": "child.one",
+                "role": "button",
+                "name": "Post",
+                "enabled": true,
+                "focused": false,
+                "bounds": {
+                  "x": 0,
+                  "y": -4,
+                  "w": 120,
+                  "h": 32
+                }
+              }
+            ]
+          }
+        ],
+        "rev": 12,
+        "app": "books"
+      },
+      "valid": false
+    },
+    {
+      "name": "unknown platform",
+      "type": "UiTree",
+      "input": {
+        "target": "books",
+        "platform": "toaster",
+        "ready": true,
+        "nodes": [
+          {
+            "id": "ledger.post",
+            "role": "button",
+            "name": "Post",
+            "enabled": true,
+            "focused": false,
+            "bounds": {
+              "x": 0,
+              "y": -4,
+              "w": 120,
+              "h": 32
+            },
+            "value": "x",
+            "checked": true,
+            "visible": false,
+            "states": [
+              "checked"
+            ],
+            "children": [
+              {
+                "id": "child.one",
+                "role": "button",
+                "name": "Post",
+                "enabled": true,
+                "focused": false,
+                "bounds": {
+                  "x": 0,
+                  "y": -4,
+                  "w": 120,
+                  "h": 32
+                }
+              }
+            ]
+          }
+        ],
+        "rev": 12
+      },
+      "valid": false
+    },
+    {
+      "name": "diff",
+      "type": "TreeDiff",
+      "input": {
+        "added": [
+          {
+            "node": {
+              "id": "ledger.post",
+              "role": "button",
+              "name": "Post",
+              "enabled": true,
+              "focused": false,
+              "bounds": {
+                "x": 0,
+                "y": -4,
+                "w": 120,
+                "h": 32
+              }
+            },
+            "parent": "ledger.list"
+          },
+          {
+            "node": {
+              "id": "top.level",
+              "role": "button",
+              "name": "Post",
+              "enabled": true,
+              "focused": false,
+              "bounds": {
+                "x": 0,
+                "y": -4,
+                "w": 120,
+                "h": 32
+              }
+            }
+          }
+        ],
+        "removed": [
+          "old.node"
+        ],
+        "changed": [
+          {
+            "id": "status.line",
+            "fields": {
+              "checked": true,
+              "value": "x",
+              "states": [
+                "on"
+              ]
+            }
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "empty diff",
+      "type": "TreeDiff",
+      "input": {
+        "added": [],
+        "removed": [],
+        "changed": []
+      },
+      "valid": true
+    },
+    {
+      "name": "no removed",
+      "type": "TreeDiff",
+      "input": {
+        "added": [],
+        "changed": []
+      },
+      "valid": false
+    },
+    {
+      "name": "added with unknown field",
+      "type": "TreeDiff",
+      "input": {
+        "added": [
+          {
+            "node": {
+              "id": "ledger.post",
+              "role": "button",
+              "name": "Post",
+              "enabled": true,
+              "focused": false,
+              "bounds": {
+                "x": 0,
+                "y": -4,
+                "w": 120,
+                "h": 32
+              },
+              "color": "red"
+            }
+          }
+        ],
+        "removed": [
+          "old.node"
+        ],
+        "changed": [
+          {
+            "id": "status.line",
+            "fields": {
+              "checked": true,
+              "value": "x",
+              "states": [
+                "on"
+              ]
+            }
+          }
+        ]
+      },
+      "valid": false
+    },
+    {
+      "name": "added with the node left flat",
+      "type": "TreeDiff",
+      "input": {
+        "added": [
+          {
+            "id": "ledger.post",
+            "role": "button",
+            "name": "Post",
+            "enabled": true,
+            "focused": false,
+            "bounds": {
+              "x": 0,
+              "y": -4,
+              "w": 120,
+              "h": 32
+            }
+          }
+        ],
+        "removed": [
+          "old.node"
+        ],
+        "changed": [
+          {
+            "id": "status.line",
+            "fields": {
+              "checked": true,
+              "value": "x",
+              "states": [
+                "on"
+              ]
+            }
+          }
+        ]
+      },
+      "valid": false
+    },
+    {
+      "name": "added with an unknown field beside the node",
+      "type": "TreeDiff",
+      "input": {
+        "added": [
+          {
+            "node": {
+              "id": "ledger.post",
+              "role": "button",
+              "name": "Post",
+              "enabled": true,
+              "focused": false,
+              "bounds": {
+                "x": 0,
+                "y": -4,
+                "w": 120,
+                "h": 32
+              }
+            },
+            "color": "red"
+          }
+        ],
+        "removed": [
+          "old.node"
+        ],
+        "changed": [
+          {
+            "id": "status.line",
+            "fields": {
+              "checked": true,
+              "value": "x",
+              "states": [
+                "on"
+              ]
+            }
+          }
+        ]
+      },
+      "valid": false
+    },
+    {
+      "name": "bad removed id",
+      "type": "TreeDiff",
+      "input": {
+        "added": [
+          {
+            "node": {
+              "id": "ledger.post",
+              "role": "button",
+              "name": "Post",
+              "enabled": true,
+              "focused": false,
+              "bounds": {
+                "x": 0,
+                "y": -4,
+                "w": 120,
+                "h": 32
+              }
+            },
+            "parent": "ledger.list"
+          },
+          {
+            "node": {
+              "id": "top.level",
+              "role": "button",
+              "name": "Post",
+              "enabled": true,
+              "focused": false,
+              "bounds": {
+                "x": 0,
+                "y": -4,
+                "w": 120,
+                "h": 32
+              }
+            }
+          }
+        ],
+        "removed": [
+          "Old Node"
+        ],
+        "changed": [
+          {
+            "id": "status.line",
+            "fields": {
+              "checked": true,
+              "value": "x",
+              "states": [
+                "on"
+              ]
+            }
+          }
+        ]
+      },
+      "valid": false
+    },
+    {
+      "name": "unchanged",
+      "type": "SnapshotResult",
+      "input": {
+        "unchanged": true
+      },
+      "valid": true
+    },
+    {
+      "name": "diff",
+      "type": "SnapshotResult",
+      "input": {
+        "diff": {
+          "added": [
+            {
+              "node": {
+                "id": "ledger.post",
+                "role": "button",
+                "name": "Post",
+                "enabled": true,
+                "focused": false,
+                "bounds": {
+                  "x": 0,
+                  "y": -4,
+                  "w": 120,
+                  "h": 32
+                }
+              },
+              "parent": "ledger.list"
+            },
+            {
+              "node": {
+                "id": "top.level",
+                "role": "button",
+                "name": "Post",
+                "enabled": true,
+                "focused": false,
+                "bounds": {
+                  "x": 0,
+                  "y": -4,
+                  "w": 120,
+                  "h": 32
+                }
+              }
+            }
+          ],
+          "removed": [
+            "old.node"
+          ],
+          "changed": [
+            {
+              "id": "status.line",
+              "fields": {
+                "checked": true,
+                "value": "x",
+                "states": [
+                  "on"
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "valid": true
+    },
+    {
+      "name": "full",
+      "type": "SnapshotResult",
+      "input": {
+        "full": true
+      },
+      "valid": true
+    },
+    {
+      "name": "compact",
+      "type": "SnapshotResult",
+      "input": {
+        "compact": "button ledger.post Post"
+      },
+      "valid": true
+    },
+    {
+      "name": "unknown field",
+      "type": "SnapshotResult",
+      "input": {
+        "stale": true
+      },
+      "valid": false
+    },
+    {
+      "name": "events",
+      "type": "EventPoll",
+      "input": {
+        "events": [
+          {
+            "seq": 1,
+            "level": "info",
+            "source": "books.import",
+            "message": "done"
+          }
+        ],
+        "latest": 1,
+        "lagged": false
+      },
+      "valid": true
+    },
+    {
+      "name": "unknown level",
+      "type": "EventPoll",
+      "input": {
+        "events": [
+          {
+            "seq": 1,
+            "level": "loud",
+            "source": "a",
+            "message": "b"
+          }
+        ],
+        "latest": 1,
+        "lagged": false
+      },
+      "valid": false
+    },
+    {
+      "name": "gpui-agent target field",
+      "type": "EventPoll",
+      "input": {
+        "events": [
+          {
+            "seq": 1,
+            "level": "info",
+            "target": "a",
+            "message": "b"
+          }
+        ],
+        "latest": 1,
+        "lagged": false
+      },
+      "valid": false
+    },
+    {
+      "name": "binding",
+      "type": "KeybindingInfo",
+      "input": {
+        "id": "ledger::Post",
+        "chord": "cmd-p",
+        "scope": "focused",
+        "dangerous": true
+      },
+      "valid": true
+    },
+    {
+      "name": "full hello",
+      "type": "HelloInfo",
+      "input": {
+        "protocol": 1,
+        "targets": [
+          "bot",
+          "books"
+        ],
+        "platform": "desktop",
+        "os": "macos",
+        "ready": true,
+        "deliveries": [
+          "semantic",
+          "virtual"
+        ],
+        "auth": "required",
+        "features": [
+          "rev",
+          "snapshot_since"
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "small hello",
+      "type": "HelloInfo",
+      "input": {
+        "protocol": 1,
+        "targets": [],
+        "platform": "headless",
+        "os": "linux",
+        "ready": false,
+        "auth": "none"
+      },
+      "valid": true
+    },
+    {
+      "name": "empty lists are dropped",
+      "type": "HelloInfo",
+      "input": {
+        "protocol": 1,
+        "targets": [],
+        "platform": "headless",
+        "os": "linux",
+        "ready": false,
+        "auth": "none",
+        "deliveries": [],
+        "features": []
+      },
+      "valid": true,
+      "output": {
+        "protocol": 1,
+        "targets": [],
+        "platform": "headless",
+        "os": "linux",
+        "ready": false,
+        "auth": "none"
+      }
+    },
+    {
+      "name": "bad target",
+      "type": "HelloInfo",
+      "input": {
+        "protocol": 1,
+        "targets": [
+          "Bot"
+        ],
+        "platform": "desktop",
+        "os": "macos",
+        "ready": true,
+        "deliveries": [
+          "semantic",
+          "virtual"
+        ],
+        "auth": "required",
+        "features": [
+          "rev",
+          "snapshot_since"
+        ]
+      },
+      "valid": false
+    },
+    {
+      "name": "wrong protocol",
+      "type": "HelloInfo",
+      "input": {
+        "protocol": 2,
+        "targets": [
+          "bot",
+          "books"
+        ],
+        "platform": "desktop",
+        "os": "macos",
+        "ready": true,
+        "deliveries": [
+          "semantic",
+          "virtual"
+        ],
+        "auth": "required",
+        "features": [
+          "rev",
+          "snapshot_since"
+        ]
+      },
+      "valid": false
+    },
+    {
+      "name": "small ok",
+      "type": "Response",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "ok": true
+      },
+      "valid": true
+    },
+    {
+      "name": "failed",
+      "type": "Response",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "ok": false,
+        "error": "stale_target"
+      },
+      "valid": true
+    },
+    {
+      "name": "hello",
+      "type": "Response",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "ok": true,
+        "hello": {
+          "protocol": 1,
+          "targets": [
+            "bot",
+            "books"
+          ],
+          "platform": "desktop",
+          "os": "macos",
+          "ready": true,
+          "deliveries": [
+            "semantic",
+            "virtual"
+          ],
+          "auth": "required",
+          "features": [
+            "rev",
+            "snapshot_since"
+          ]
+        }
+      },
+      "valid": true
+    },
+    {
+      "name": "tree, fingerprints and rev",
+      "type": "Response",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "ok": true,
+        "tree": {
+          "target": "books",
+          "platform": "desktop",
+          "ready": true,
+          "nodes": [
+            {
+              "id": "ledger.post",
+              "role": "button",
+              "name": "Post",
+              "enabled": true,
+              "focused": false,
+              "bounds": {
+                "x": 0,
+                "y": -4,
+                "w": 120,
+                "h": 32
+              },
+              "value": "x",
+              "checked": true,
+              "visible": false,
+              "states": [
+                "checked"
+              ],
+              "children": [
+                {
+                  "id": "child.one",
+                  "role": "button",
+                  "name": "Post",
+                  "enabled": true,
+                  "focused": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": -4,
+                    "w": 120,
+                    "h": 32
+                  }
+                }
+              ]
+            }
+          ],
+          "rev": 12
+        },
+        "fingerprints": {
+          "ledger.post": "0123456789abcdef"
+        },
+        "rev": 12
+      },
+      "valid": true
+    },
+    {
+      "name": "free result",
+      "type": "Response",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "ok": true,
+        "result": {
+          "diff": {
+            "added": [
+              {
+                "node": {
+                  "id": "ledger.post",
+                  "role": "button",
+                  "name": "Post",
+                  "enabled": true,
+                  "focused": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": -4,
+                    "w": 120,
+                    "h": 32
+                  }
+                },
+                "parent": "ledger.list"
+              },
+              {
+                "node": {
+                  "id": "top.level",
+                  "role": "button",
+                  "name": "Post",
+                  "enabled": true,
+                  "focused": false,
+                  "bounds": {
+                    "x": 0,
+                    "y": -4,
+                    "w": 120,
+                    "h": 32
+                  }
+                }
+              }
+            ],
+            "removed": [
+              "old.node"
+            ],
+            "changed": [
+              {
+                "id": "status.line",
+                "fields": {
+                  "checked": true,
+                  "value": "x",
+                  "states": [
+                    "on"
+                  ]
+                }
+              }
+            ]
+          },
+          "n": [
+            1,
+            2
+          ]
+        }
+      },
+      "valid": true
+    },
+    {
+      "name": "null result is dropped",
+      "type": "Response",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "ok": true,
+        "result": null
+      },
+      "valid": true,
+      "output": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "ok": true
+      }
+    },
+    {
+      "name": "no target",
+      "type": "Response",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "ok": true
+      },
+      "valid": false
+    },
+    {
+      "name": "bad fingerprint key",
+      "type": "Response",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "ok": true,
+        "fingerprints": {
+          "Bad Id": "0123456789abcdef"
+        }
+      },
+      "valid": false
+    },
+    {
+      "name": "numeric fingerprint",
+      "type": "Response",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "ok": true,
+        "fingerprints": {
+          "a": 1
+        }
+      },
+      "valid": false
+    },
+    {
+      "name": "unknown field",
+      "type": "Response",
+      "input": {
+        "v": 1,
+        "id": "m1",
+        "target": "books",
+        "ok": true,
+        "extra": 1
+      },
+      "valid": false
+    },
+    {
+      "name": "challenge",
+      "type": "Challenge",
+      "input": {
+        "v": 1,
+        "target": "bot",
+        "op": "challenge",
+        "nonce": "abababababababababababababababababababababababababababababababab"
+      },
+      "valid": true
+    },
+    {
+      "name": "no target",
+      "type": "Challenge",
+      "input": {
+        "v": 1,
+        "op": "challenge",
+        "nonce": "abababababababababababababababababababababababababababababababab"
+      },
+      "valid": false
+    },
+    {
+      "name": "other op",
+      "type": "Challenge",
+      "input": {
+        "v": 1,
+        "target": "bot",
+        "op": "hello",
+        "nonce": "abababababababababababababababababababababababababababababababab"
+      },
+      "valid": false
+    },
+    {
+      "name": "made from two refs",
+      "type": "Provenance",
+      "input": {
+        "made_by": "agent.broker",
+        "from": [
+          "ctx://file/sales.xlsx",
+          "ctx://books/batch/b7"
+        ],
+        "content_hash": "sha256:abababababababababababababababababababababababababababababababab"
+      },
+      "valid": true
+    },
+    {
+      "name": "an original",
+      "type": "Provenance",
+      "input": {
+        "made_by": "person.owner",
+        "from": [],
+        "content_hash": "sha256:abababababababababababababababababababababababababababababababab"
+      },
+      "valid": true
+    },
+    {
+      "name": "email as maker",
+      "type": "Provenance",
+      "input": {
+        "made_by": "someone@example.invalid",
+        "from": [],
+        "content_hash": "sha256:abababababababababababababababababababababababababababababababab"
+      },
+      "valid": false
+    },
+    {
+      "name": "bad source",
+      "type": "Provenance",
+      "input": {
+        "made_by": "agent.broker",
+        "from": [
+          "file/sales.xlsx"
+        ],
+        "content_hash": "sha256:abababababababababababababababababababababababababababababababab"
+      },
+      "valid": false
+    },
+    {
+      "name": "bad hash",
+      "type": "Provenance",
+      "input": {
+        "made_by": "agent.broker",
+        "from": [],
+        "content_hash": "md5:ab"
+      },
+      "valid": false
+    },
+    {
+      "name": "no hash",
+      "type": "Provenance",
+      "input": {
+        "made_by": "agent.broker",
+        "from": []
+      },
+      "valid": false
+    },
+    {
+      "name": "two readers",
+      "type": "Grant",
+      "input": {
+        "ctx": "ctx://books/batch/b7",
+        "readers": [
+          "books",
+          "ebirforms"
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "nobody yet",
+      "type": "Grant",
+      "input": {
+        "ctx": "ctx://books/batch/b7",
+        "readers": []
+      },
+      "valid": true
+    },
+    {
+      "name": "bad reader",
+      "type": "Grant",
+      "input": {
+        "ctx": "ctx://books/batch/b7",
+        "readers": [
+          "Books"
+        ]
+      },
+      "valid": false
+    },
+    {
+      "name": "no readers",
+      "type": "Grant",
+      "input": {
+        "ctx": "ctx://books/batch/b7"
+      },
+      "valid": false
+    },
+    {
+      "name": "a write tool",
+      "type": "ToolSpec",
+      "input": {
+        "target": "books",
+        "name": "ledger.post",
+        "about": "Post a draft entry",
+        "effect": "write",
+        "needs": [
+          {
+            "name": "entry",
+            "kind": "ctx",
+            "about": "The draft"
+          },
+          {
+            "name": "period",
+            "kind": "text"
+          }
+        ],
+        "fills_in": [
+          {
+            "need": "period",
+            "from": "period"
+          }
+        ],
+        "returns": {
+          "kind": "ctx",
+          "about": "The posted entry"
+        }
+      },
+      "valid": true
+    },
+    {
+      "name": "a read tool that needs nothing",
+      "type": "ToolSpec",
+      "input": {
+        "target": "books",
+        "name": "ledger.list",
+        "effect": "read",
+        "needs": [],
+        "fills_in": [],
+        "returns": {
+          "kind": "list"
+        }
+      },
+      "valid": true
+    },
+    {
+      "name": "no effect",
+      "type": "ToolSpec",
+      "input": {
+        "target": "books",
+        "name": "ledger.post",
+        "about": "Post a draft entry",
+        "needs": [
+          {
+            "name": "entry",
+            "kind": "ctx",
+            "about": "The draft"
+          },
+          {
+            "name": "period",
+            "kind": "text"
+          }
+        ],
+        "fills_in": [
+          {
+            "need": "period",
+            "from": "period"
+          }
+        ],
+        "returns": {
+          "kind": "ctx",
+          "about": "The posted entry"
+        }
+      },
+      "valid": false
+    },
+    {
+      "name": "no needs",
+      "type": "ToolSpec",
+      "input": {
+        "target": "books",
+        "name": "ledger.post",
+        "about": "Post a draft entry",
+        "effect": "write",
+        "fills_in": [
+          {
+            "need": "period",
+            "from": "period"
+          }
+        ],
+        "returns": {
+          "kind": "ctx",
+          "about": "The posted entry"
+        }
+      },
+      "valid": false
+    },
+    {
+      "name": "no fills_in",
+      "type": "ToolSpec",
+      "input": {
+        "target": "books",
+        "name": "ledger.post",
+        "about": "Post a draft entry",
+        "effect": "write",
+        "needs": [
+          {
+            "name": "entry",
+            "kind": "ctx",
+            "about": "The draft"
+          },
+          {
+            "name": "period",
+            "kind": "text"
+          }
+        ],
+        "returns": {
+          "kind": "ctx",
+          "about": "The posted entry"
+        }
+      },
+      "valid": false
+    },
+    {
+      "name": "no returns",
+      "type": "ToolSpec",
+      "input": {
+        "target": "books",
+        "name": "ledger.post",
+        "about": "Post a draft entry",
+        "effect": "write",
+        "needs": [
+          {
+            "name": "entry",
+            "kind": "ctx",
+            "about": "The draft"
+          },
+          {
+            "name": "period",
+            "kind": "text"
+          }
+        ],
+        "fills_in": [
+          {
+            "need": "period",
+            "from": "period"
+          }
+        ]
+      },
+      "valid": false
+    },
+    {
+      "name": "no target",
+      "type": "ToolSpec",
+      "input": {
+        "name": "ledger.post",
+        "about": "Post a draft entry",
+        "effect": "write",
+        "needs": [
+          {
+            "name": "entry",
+            "kind": "ctx",
+            "about": "The draft"
+          },
+          {
+            "name": "period",
+            "kind": "text"
+          }
+        ],
+        "fills_in": [
+          {
+            "need": "period",
+            "from": "period"
+          }
+        ],
+        "returns": {
+          "kind": "ctx",
+          "about": "The posted entry"
+        }
+      },
+      "valid": false
+    },
+    {
+      "name": "no name",
+      "type": "ToolSpec",
+      "input": {
+        "target": "books",
+        "about": "Post a draft entry",
+        "effect": "write",
+        "needs": [
+          {
+            "name": "entry",
+            "kind": "ctx",
+            "about": "The draft"
+          },
+          {
+            "name": "period",
+            "kind": "text"
+          }
+        ],
+        "fills_in": [
+          {
+            "need": "period",
+            "from": "period"
+          }
+        ],
+        "returns": {
+          "kind": "ctx",
+          "about": "The posted entry"
+        }
+      },
+      "valid": false
+    },
+    {
+      "name": "unknown effect",
+      "type": "ToolSpec",
+      "input": {
+        "target": "books",
+        "name": "ledger.post",
+        "about": "Post a draft entry",
+        "effect": "erase",
+        "needs": [
+          {
+            "name": "entry",
+            "kind": "ctx",
+            "about": "The draft"
+          },
+          {
+            "name": "period",
+            "kind": "text"
+          }
+        ],
+        "fills_in": [
+          {
+            "need": "period",
+            "from": "period"
+          }
+        ],
+        "returns": {
+          "kind": "ctx",
+          "about": "The posted entry"
+        }
+      },
+      "valid": false
+    },
+    {
+      "name": "effect in another case",
+      "type": "ToolSpec",
+      "input": {
+        "target": "books",
+        "name": "ledger.post",
+        "about": "Post a draft entry",
+        "effect": "WRITE",
+        "needs": [
+          {
+            "name": "entry",
+            "kind": "ctx",
+            "about": "The draft"
+          },
+          {
+            "name": "period",
+            "kind": "text"
+          }
+        ],
+        "fills_in": [
+          {
+            "need": "period",
+            "from": "period"
+          }
+        ],
+        "returns": {
+          "kind": "ctx",
+          "about": "The posted entry"
+        }
+      },
+      "valid": false
+    },
+    {
+      "name": "unknown value kind",
+      "type": "ToolSpec",
+      "input": {
+        "target": "books",
+        "name": "ledger.post",
+        "about": "Post a draft entry",
+        "effect": "write",
+        "needs": [
+          {
+            "name": "entry",
+            "kind": "ctx",
+            "about": "The draft"
+          },
+          {
+            "name": "period",
+            "kind": "text"
+          }
+        ],
+        "fills_in": [
+          {
+            "need": "period",
+            "from": "period"
+          }
+        ],
+        "returns": {
+          "kind": "float"
+        }
+      },
+      "valid": false
+    },
+    {
+      "name": "fill for a need it does not have",
+      "type": "ToolSpec",
+      "input": {
+        "target": "books",
+        "name": "ledger.post",
+        "about": "Post a draft entry",
+        "effect": "write",
+        "needs": [
+          {
+            "name": "entry",
+            "kind": "ctx",
+            "about": "The draft"
+          },
+          {
+            "name": "period",
+            "kind": "text"
+          }
+        ],
+        "fills_in": [
+          {
+            "need": "tin",
+            "from": "tin"
+          }
+        ],
+        "returns": {
+          "kind": "ctx",
+          "about": "The posted entry"
+        }
+      },
+      "valid": false,
+      "schema_allows": true
+    },
+    {
+      "name": "two needs share a name",
+      "type": "ToolSpec",
+      "input": {
+        "target": "books",
+        "name": "ledger.post",
+        "about": "Post a draft entry",
+        "effect": "write",
+        "needs": [
+          {
+            "name": "a",
+            "kind": "text"
+          },
+          {
+            "name": "a",
+            "kind": "text"
+          }
+        ],
+        "fills_in": [],
+        "returns": {
+          "kind": "ctx",
+          "about": "The posted entry"
+        }
+      },
+      "valid": false,
+      "schema_allows": true
+    },
+    {
+      "name": "one need filled twice",
+      "type": "ToolSpec",
+      "input": {
+        "target": "books",
+        "name": "ledger.post",
+        "about": "Post a draft entry",
+        "effect": "write",
+        "needs": [
+          {
+            "name": "entry",
+            "kind": "ctx",
+            "about": "The draft"
+          },
+          {
+            "name": "period",
+            "kind": "text"
+          }
+        ],
+        "fills_in": [
+          {
+            "need": "period",
+            "from": "period"
+          },
+          {
+            "need": "period",
+            "from": "quarter"
+          }
+        ],
+        "returns": {
+          "kind": "ctx",
+          "about": "The posted entry"
+        }
+      },
+      "valid": false,
+      "schema_allows": true
+    },
+    {
+      "name": "approval",
+      "type": "Approval",
+      "input": {
+        "target": "books",
+        "action": "ledger.post",
+        "once": "press-0001",
+        "approved_by": "person.owner"
+      },
+      "valid": true
+    },
+    {
+      "name": "no once",
+      "type": "Approval",
+      "input": {
+        "target": "books",
+        "action": "ledger.post",
+        "approved_by": "person.owner"
+      },
+      "valid": false
+    },
+    {
+      "name": "no approver",
+      "type": "Approval",
+      "input": {
+        "target": "books",
+        "action": "ledger.post",
+        "once": "press-0001"
+      },
+      "valid": false
+    },
+    {
+      "name": "agent",
+      "type": "Caller",
+      "input": {
+        "kind": "agent",
+        "who": "agent.broker"
+      },
+      "valid": true
+    },
+    {
+      "name": "agent with null approval",
+      "type": "Caller",
+      "input": {
+        "kind": "agent",
+        "who": "agent.broker",
+        "approval": null
+      },
+      "valid": true,
+      "output": {
+        "kind": "agent",
+        "who": "agent.broker"
+      }
+    },
+    {
+      "name": "person with an approval",
+      "type": "Caller",
+      "input": {
+        "kind": "person",
+        "who": "person.owner",
+        "approval": {
+          "target": "books",
+          "action": "ledger.post",
+          "once": "press-0001",
+          "approved_by": "person.owner"
+        }
+      },
+      "valid": false
+    },
+    {
+      "name": "with an open press",
+      "type": "PressAction",
+      "input": {
+        "target": "books",
+        "id": "ledger.post",
+        "effect": "write",
+        "once": "press-0001"
+      },
+      "valid": true
+    },
+    {
+      "name": "the AI after approval",
+      "type": "PressedBy",
+      "input": {
+        "by": "ai_approved",
+        "who": "agent.broker",
+        "approved_by": "person.owner",
+        "once": "press-0001"
+      },
+      "valid": true
+    },
+    {
+      "name": "shown and logged",
+      "type": "Allowed",
+      "input": {
+        "target": "books",
+        "action": "ledger.post",
+        "effect": "write",
+        "pressed": {
+          "by": "person",
+          "who": "person.owner"
+        }
+      },
+      "valid": true
+    }
+  ]
+}

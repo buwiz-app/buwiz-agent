@@ -1,0 +1,1018 @@
+{
+  "about": "authorize_press. action and caller: any JSON, absent means missing; expect: the allowed value, or the refusal code. All values are fakes.",
+  "cases": [
+    {
+      "name": "a person presses a read action",
+      "action": {
+        "target": "books",
+        "id": "ledger.post",
+        "effect": "read"
+      },
+      "caller": {
+        "kind": "person",
+        "who": "person.owner"
+      },
+      "expect": {
+        "allowed": {
+          "target": "books",
+          "action": "ledger.post",
+          "effect": "read",
+          "pressed": {
+            "by": "person",
+            "who": "person.owner"
+          }
+        }
+      }
+    },
+    {
+      "name": "a person presses a draft action",
+      "action": {
+        "target": "books",
+        "id": "ledger.post",
+        "effect": "draft"
+      },
+      "caller": {
+        "kind": "person",
+        "who": "person.owner"
+      },
+      "expect": {
+        "allowed": {
+          "target": "books",
+          "action": "ledger.post",
+          "effect": "draft",
+          "pressed": {
+            "by": "person",
+            "who": "person.owner"
+          }
+        }
+      }
+    },
+    {
+      "name": "a person presses a write action",
+      "action": {
+        "target": "books",
+        "id": "ledger.post",
+        "effect": "write"
+      },
+      "caller": {
+        "kind": "person",
+        "who": "person.owner"
+      },
+      "expect": {
+        "allowed": {
+          "target": "books",
+          "action": "ledger.post",
+          "effect": "write",
+          "pressed": {
+            "by": "person",
+            "who": "person.owner"
+          }
+        }
+      }
+    },
+    {
+      "name": "a person presses a file action",
+      "action": {
+        "target": "books",
+        "id": "ledger.post",
+        "effect": "file"
+      },
+      "caller": {
+        "kind": "person",
+        "who": "person.owner"
+      },
+      "expect": {
+        "allowed": {
+          "target": "books",
+          "action": "ledger.post",
+          "effect": "file",
+          "pressed": {
+            "by": "person",
+            "who": "person.owner"
+          }
+        }
+      }
+    },
+    {
+      "name": "a person needs no open press",
+      "action": {
+        "target": "books",
+        "id": "ledger.post",
+        "effect": "write",
+        "once": "press-0001"
+      },
+      "caller": {
+        "kind": "person",
+        "who": "person.owner"
+      },
+      "expect": {
+        "allowed": {
+          "target": "books",
+          "action": "ledger.post",
+          "effect": "write",
+          "pressed": {
+            "by": "person",
+            "who": "person.owner"
+          }
+        }
+      }
+    },
+    {
+      "name": "the AI presses Post with its approval",
+      "action": {
+        "target": "books",
+        "id": "ledger.post",
+        "effect": "write",
+        "once": "press-0001"
+      },
+      "caller": {
+        "kind": "agent",
+        "who": "agent.broker",
+        "approval": {
+          "target": "books",
+          "action": "ledger.post",
+          "once": "press-0001",
+          "approved_by": "person.owner"
+        }
+      },
+      "expect": {
+        "allowed": {
+          "target": "books",
+          "action": "ledger.post",
+          "effect": "write",
+          "pressed": {
+            "by": "ai_approved",
+            "who": "agent.broker",
+            "approved_by": "person.owner",
+            "once": "press-0001"
+          }
+        }
+      }
+    },
+    {
+      "name": "the AI presses File with its approval",
+      "action": {
+        "target": "books",
+        "id": "return.file",
+        "effect": "file",
+        "once": "press-0001"
+      },
+      "caller": {
+        "kind": "agent",
+        "who": "agent.broker",
+        "approval": {
+          "target": "books",
+          "action": "return.file",
+          "once": "press-0001",
+          "approved_by": "person.owner"
+        }
+      },
+      "expect": {
+        "allowed": {
+          "target": "books",
+          "action": "return.file",
+          "effect": "file",
+          "pressed": {
+            "by": "ai_approved",
+            "who": "agent.broker",
+            "approved_by": "person.owner",
+            "once": "press-0001"
+          }
+        }
+      }
+    },
+    {
+      "name": "the AI needs no approval to read",
+      "action": {
+        "target": "books",
+        "id": "ledger.post",
+        "effect": "read"
+      },
+      "caller": {
+        "kind": "agent",
+        "who": "agent.broker"
+      },
+      "expect": {
+        "allowed": {
+          "target": "books",
+          "action": "ledger.post",
+          "effect": "read",
+          "pressed": {
+            "by": "ai",
+            "who": "agent.broker"
+          }
+        }
+      }
+    },
+    {
+      "name": "a routine may read",
+      "action": {
+        "target": "books",
+        "id": "ledger.post",
+        "effect": "read"
+      },
+      "caller": {
+        "kind": "routine",
+        "who": "routine.month-end"
+      },
+      "expect": {
+        "allowed": {
+          "target": "books",
+          "action": "ledger.post",
+          "effect": "read",
+          "pressed": {
+            "by": "routine",
+            "who": "routine.month-end"
+          }
+        }
+      }
+    },
+    {
+      "name": "the AI needs no approval to draft",
+      "action": {
+        "target": "books",
+        "id": "ledger.post",
+        "effect": "draft"
+      },
+      "caller": {
+        "kind": "agent",
+        "who": "agent.broker"
+      },
+      "expect": {
+        "allowed": {
+          "target": "books",
+          "action": "ledger.post",
+          "effect": "draft",
+          "pressed": {
+            "by": "ai",
+            "who": "agent.broker"
+          }
+        }
+      }
+    },
+    {
+      "name": "a routine may draft",
+      "action": {
+        "target": "books",
+        "id": "ledger.post",
+        "effect": "draft"
+      },
+      "caller": {
+        "kind": "routine",
+        "who": "routine.month-end"
+      },
+      "expect": {
+        "allowed": {
+          "target": "books",
+          "action": "ledger.post",
+          "effect": "draft",
+          "pressed": {
+            "by": "routine",
+            "who": "routine.month-end"
+          }
+        }
+      }
+    },
+    {
+      "name": "an approval on a draft changes nothing",
+      "action": {
+        "target": "books",
+        "id": "ledger.post",
+        "effect": "draft"
+      },
+      "caller": {
+        "kind": "agent",
+        "who": "agent.broker",
+        "approval": {
+          "target": "sheet",
+          "action": "other.action",
+          "once": "press-0001",
+          "approved_by": "person.owner"
+        }
+      },
+      "expect": {
+        "allowed": {
+          "target": "books",
+          "action": "ledger.post",
+          "effect": "draft",
+          "pressed": {
+            "by": "ai",
+            "who": "agent.broker"
+          }
+        }
+      }
+    },
+    {
+      "name": "the AI has no approval for a write action",
+      "action": {
+        "target": "books",
+        "id": "ledger.post",
+        "effect": "write",
+        "once": "press-0001"
+      },
+      "caller": {
+        "kind": "agent",
+        "who": "agent.broker"
+      },
+      "expect": {
+        "refused": "approval_missing"
+      }
+    },
+    {
+      "name": "a routine reaches for a write action",
+      "action": {
+        "target": "books",
+        "id": "ledger.post",
+        "effect": "write",
+        "once": "press-0001"
+      },
+      "caller": {
+        "kind": "routine",
+        "who": "routine.month-end"
+      },
+      "expect": {
+        "refused": "routine_needs_person"
+      }
+    },
+    {
+      "name": "the AI has no approval for a file action",
+      "action": {
+        "target": "books",
+        "id": "ledger.post",
+        "effect": "file",
+        "once": "press-0001"
+      },
+      "caller": {
+        "kind": "agent",
+        "who": "agent.broker"
+      },
+      "expect": {
+        "refused": "approval_missing"
+      }
+    },
+    {
+      "name": "a routine reaches for a file action",
+      "action": {
+        "target": "books",
+        "id": "ledger.post",
+        "effect": "file",
+        "once": "press-0001"
+      },
+      "caller": {
+        "kind": "routine",
+        "who": "routine.month-end"
+      },
+      "expect": {
+        "refused": "routine_needs_person"
+      }
+    },
+    {
+      "name": "null approval counts as none",
+      "action": {
+        "target": "books",
+        "id": "ledger.post",
+        "effect": "write",
+        "once": "press-0001"
+      },
+      "caller": {
+        "kind": "agent",
+        "who": "agent.broker",
+        "approval": null
+      },
+      "expect": {
+        "refused": "approval_missing"
+      }
+    },
+    {
+      "name": "an approval for one action used on another",
+      "action": {
+        "target": "books",
+        "id": "month.close",
+        "effect": "write",
+        "once": "press-0001"
+      },
+      "caller": {
+        "kind": "agent",
+        "who": "agent.broker",
+        "approval": {
+          "target": "books",
+          "action": "ledger.post",
+          "once": "press-0001",
+          "approved_by": "person.owner"
+        }
+      },
+      "expect": {
+        "refused": "approval_wrong_action"
+      }
+    },
+    {
+      "name": "an approval for one app used on another",
+      "action": {
+        "target": "ebirforms",
+        "id": "ledger.post",
+        "effect": "write",
+        "once": "press-0001"
+      },
+      "caller": {
+        "kind": "agent",
+        "who": "agent.broker",
+        "approval": {
+          "target": "books",
+          "action": "ledger.post",
+          "once": "press-0001",
+          "approved_by": "person.owner"
+        }
+      },
+      "expect": {
+        "refused": "approval_wrong_target"
+      }
+    },
+    {
+      "name": "the target is checked before the action",
+      "action": {
+        "target": "ebirforms",
+        "id": "month.close",
+        "effect": "write",
+        "once": "press-0001"
+      },
+      "caller": {
+        "kind": "agent",
+        "who": "agent.broker",
+        "approval": {
+          "target": "books",
+          "action": "ledger.post",
+          "once": "press-0001",
+          "approved_by": "person.owner"
+        }
+      },
+      "expect": {
+        "refused": "approval_wrong_target"
+      }
+    },
+    {
+      "name": "a used approval on the next press of the same action",
+      "action": {
+        "target": "books",
+        "id": "ledger.post",
+        "effect": "write",
+        "once": "press-0002"
+      },
+      "caller": {
+        "kind": "agent",
+        "who": "agent.broker",
+        "approval": {
+          "target": "books",
+          "action": "ledger.post",
+          "once": "press-0001",
+          "approved_by": "person.owner"
+        }
+      },
+      "expect": {
+        "refused": "approval_wrong_press"
+      }
+    },
+    {
+      "name": "an approval with no open press",
+      "action": {
+        "target": "books",
+        "id": "ledger.post",
+        "effect": "write"
+      },
+      "caller": {
+        "kind": "agent",
+        "who": "agent.broker",
+        "approval": {
+          "target": "books",
+          "action": "ledger.post",
+          "once": "press-0001",
+          "approved_by": "person.owner"
+        }
+      },
+      "expect": {
+        "refused": "no_open_press"
+      }
+    },
+    {
+      "name": "null once counts as no open press",
+      "action": {
+        "target": "books",
+        "id": "ledger.post",
+        "effect": "write",
+        "once": null
+      },
+      "caller": {
+        "kind": "agent",
+        "who": "agent.broker",
+        "approval": {
+          "target": "books",
+          "action": "ledger.post",
+          "once": "press-0001",
+          "approved_by": "person.owner"
+        }
+      },
+      "expect": {
+        "refused": "no_open_press"
+      }
+    },
+    {
+      "name": "a routine carrying an approval",
+      "action": {
+        "target": "books",
+        "id": "ledger.post",
+        "effect": "write",
+        "once": "press-0001"
+      },
+      "caller": {
+        "kind": "routine",
+        "who": "routine.month-end",
+        "approval": {
+          "target": "books",
+          "action": "ledger.post",
+          "once": "press-0001",
+          "approved_by": "person.owner"
+        }
+      },
+      "expect": {
+        "refused": "unknown_caller"
+      }
+    },
+    {
+      "name": "a person carrying an approval",
+      "action": {
+        "target": "books",
+        "id": "ledger.post",
+        "effect": "write",
+        "once": "press-0001"
+      },
+      "caller": {
+        "kind": "person",
+        "who": "person.owner",
+        "approval": {
+          "target": "books",
+          "action": "ledger.post",
+          "once": "press-0001",
+          "approved_by": "person.owner"
+        }
+      },
+      "expect": {
+        "refused": "unknown_caller"
+      }
+    },
+    {
+      "name": "no action at all",
+      "caller": {
+        "kind": "person",
+        "who": "person.owner"
+      },
+      "expect": {
+        "refused": "unknown_action"
+      }
+    },
+    {
+      "name": "null action",
+      "action": null,
+      "caller": {
+        "kind": "person",
+        "who": "person.owner"
+      },
+      "expect": {
+        "refused": "unknown_action"
+      }
+    },
+    {
+      "name": "neither action nor caller",
+      "expect": {
+        "refused": "unknown_action"
+      }
+    },
+    {
+      "name": "an effect nobody knows",
+      "action": {
+        "target": "books",
+        "id": "ledger.post",
+        "effect": "erase"
+      },
+      "caller": {
+        "kind": "person",
+        "who": "person.owner"
+      },
+      "expect": {
+        "refused": "unknown_action"
+      }
+    },
+    {
+      "name": "an effect in another case",
+      "action": {
+        "target": "books",
+        "id": "ledger.post",
+        "effect": "WRITE"
+      },
+      "caller": {
+        "kind": "person",
+        "who": "person.owner"
+      },
+      "expect": {
+        "refused": "unknown_action"
+      }
+    },
+    {
+      "name": "an action with no effect",
+      "action": {
+        "target": "books",
+        "id": "ledger.post"
+      },
+      "caller": {
+        "kind": "person",
+        "who": "person.owner"
+      },
+      "expect": {
+        "refused": "unknown_action"
+      }
+    },
+    {
+      "name": "an action with no target",
+      "action": {
+        "id": "ledger.post",
+        "effect": "read"
+      },
+      "caller": {
+        "kind": "person",
+        "who": "person.owner"
+      },
+      "expect": {
+        "refused": "unknown_action"
+      }
+    },
+    {
+      "name": "an action with a bad target",
+      "action": {
+        "target": "Books",
+        "id": "ledger.post",
+        "effect": "read"
+      },
+      "caller": {
+        "kind": "person",
+        "who": "person.owner"
+      },
+      "expect": {
+        "refused": "unknown_action"
+      }
+    },
+    {
+      "name": "an action with a bad id",
+      "action": {
+        "target": "books",
+        "id": "Ledger Post",
+        "effect": "read"
+      },
+      "caller": {
+        "kind": "person",
+        "who": "person.owner"
+      },
+      "expect": {
+        "refused": "unknown_action"
+      }
+    },
+    {
+      "name": "an action with a bad once",
+      "action": {
+        "target": "books",
+        "id": "ledger.post",
+        "effect": "write",
+        "once": "short"
+      },
+      "caller": {
+        "kind": "agent",
+        "who": "agent.broker",
+        "approval": {
+          "target": "books",
+          "action": "ledger.post",
+          "once": "press-0001",
+          "approved_by": "person.owner"
+        }
+      },
+      "expect": {
+        "refused": "unknown_action"
+      }
+    },
+    {
+      "name": "an action with an unknown field",
+      "action": {
+        "target": "books",
+        "id": "ledger.post",
+        "effect": "read",
+        "person_only": false
+      },
+      "caller": {
+        "kind": "person",
+        "who": "person.owner"
+      },
+      "expect": {
+        "refused": "unknown_action"
+      }
+    },
+    {
+      "name": "an action that is a string",
+      "action": "ledger.post",
+      "caller": {
+        "kind": "person",
+        "who": "person.owner"
+      },
+      "expect": {
+        "refused": "unknown_action"
+      }
+    },
+    {
+      "name": "no caller at all",
+      "action": {
+        "target": "books",
+        "id": "ledger.post",
+        "effect": "read"
+      },
+      "expect": {
+        "refused": "unknown_caller"
+      }
+    },
+    {
+      "name": "null caller",
+      "action": {
+        "target": "books",
+        "id": "ledger.post",
+        "effect": "read"
+      },
+      "caller": null,
+      "expect": {
+        "refused": "unknown_caller"
+      }
+    },
+    {
+      "name": "a kind nobody knows",
+      "action": {
+        "target": "books",
+        "id": "ledger.post",
+        "effect": "read"
+      },
+      "caller": {
+        "kind": "robot",
+        "who": "agent.broker"
+      },
+      "expect": {
+        "refused": "unknown_caller"
+      }
+    },
+    {
+      "name": "a kind in another case",
+      "action": {
+        "target": "books",
+        "id": "ledger.post",
+        "effect": "read"
+      },
+      "caller": {
+        "kind": "Person",
+        "who": "person.owner"
+      },
+      "expect": {
+        "refused": "unknown_caller"
+      }
+    },
+    {
+      "name": "a caller with no kind",
+      "action": {
+        "target": "books",
+        "id": "ledger.post",
+        "effect": "read"
+      },
+      "caller": {
+        "who": "person.owner"
+      },
+      "expect": {
+        "refused": "unknown_caller"
+      }
+    },
+    {
+      "name": "a caller with no who",
+      "action": {
+        "target": "books",
+        "id": "ledger.post",
+        "effect": "read"
+      },
+      "caller": {
+        "kind": "person"
+      },
+      "expect": {
+        "refused": "unknown_caller"
+      }
+    },
+    {
+      "name": "a caller named by email",
+      "action": {
+        "target": "books",
+        "id": "ledger.post",
+        "effect": "read"
+      },
+      "caller": {
+        "kind": "person",
+        "who": "someone@example.invalid"
+      },
+      "expect": {
+        "refused": "unknown_caller"
+      }
+    },
+    {
+      "name": "a caller that is a string",
+      "action": {
+        "target": "books",
+        "id": "ledger.post",
+        "effect": "read"
+      },
+      "caller": "person",
+      "expect": {
+        "refused": "unknown_caller"
+      }
+    },
+    {
+      "name": "a misspelled approval",
+      "action": {
+        "target": "books",
+        "id": "ledger.post",
+        "effect": "write",
+        "once": "press-0001"
+      },
+      "caller": {
+        "kind": "agent",
+        "who": "agent.broker",
+        "aproval": {
+          "target": "books",
+          "action": "ledger.post",
+          "once": "press-0001",
+          "approved_by": "person.owner"
+        }
+      },
+      "expect": {
+        "refused": "unknown_caller"
+      }
+    },
+    {
+      "name": "an approval with no once",
+      "action": {
+        "target": "books",
+        "id": "ledger.post",
+        "effect": "write",
+        "once": "press-0001"
+      },
+      "caller": {
+        "kind": "agent",
+        "who": "agent.broker",
+        "approval": {
+          "target": "books",
+          "action": "ledger.post",
+          "approved_by": "person.owner"
+        }
+      },
+      "expect": {
+        "refused": "unknown_caller"
+      }
+    },
+    {
+      "name": "an approval with no approver",
+      "action": {
+        "target": "books",
+        "id": "ledger.post",
+        "effect": "write",
+        "once": "press-0001"
+      },
+      "caller": {
+        "kind": "agent",
+        "who": "agent.broker",
+        "approval": {
+          "target": "books",
+          "action": "ledger.post",
+          "once": "press-0001"
+        }
+      },
+      "expect": {
+        "refused": "unknown_caller"
+      }
+    },
+    {
+      "name": "an approval with an unknown field",
+      "action": {
+        "target": "books",
+        "id": "ledger.post",
+        "effect": "write",
+        "once": "press-0001"
+      },
+      "caller": {
+        "kind": "agent",
+        "who": "agent.broker",
+        "approval": {
+          "target": "books",
+          "action": "ledger.post",
+          "once": "press-0001",
+          "approved_by": "person.owner",
+          "all": true
+        }
+      },
+      "expect": {
+        "refused": "unknown_caller"
+      }
+    },
+    {
+      "name": "the AI approves its own press",
+      "action": {
+        "target": "books",
+        "id": "ledger.post",
+        "effect": "write",
+        "once": "press-0001"
+      },
+      "caller": {
+        "kind": "agent",
+        "who": "agent.broker",
+        "approval": {
+          "target": "books",
+          "action": "ledger.post",
+          "once": "press-0001",
+          "approved_by": "agent.broker"
+        }
+      },
+      "expect": {
+        "refused": "approval_not_person"
+      }
+    },
+    {
+      "name": "a routine approves the AI's press",
+      "action": {
+        "target": "books",
+        "id": "ledger.post",
+        "effect": "write",
+        "once": "press-0001"
+      },
+      "caller": {
+        "kind": "agent",
+        "who": "agent.broker",
+        "approval": {
+          "target": "books",
+          "action": "ledger.post",
+          "once": "press-0001",
+          "approved_by": "routine.month-end"
+        }
+      },
+      "expect": {
+        "refused": "approval_not_person"
+      }
+    },
+    {
+      "name": "an approver handle that only starts like a person",
+      "action": {
+        "target": "books",
+        "id": "ledger.post",
+        "effect": "write",
+        "once": "press-0001"
+      },
+      "caller": {
+        "kind": "agent",
+        "who": "agent.broker",
+        "approval": {
+          "target": "books",
+          "action": "ledger.post",
+          "once": "press-0001",
+          "approved_by": "personal.owner"
+        }
+      },
+      "expect": {
+        "refused": "approval_not_person"
+      }
+    },
+    {
+      "name": "a person caller with an agent's handle",
+      "action": {
+        "target": "books",
+        "id": "ledger.post",
+        "effect": "write",
+        "once": "press-0001"
+      },
+      "caller": {
+        "kind": "person",
+        "who": "agent.broker"
+      },
+      "expect": {
+        "refused": "unknown_caller"
+      }
+    },
+    {
+      "name": "a person caller with an agent's handle on a read",
+      "action": {
+        "target": "books",
+        "id": "ledger.post",
+        "effect": "read"
+      },
+      "caller": {
+        "kind": "person",
+        "who": "agent.broker"
+      },
+      "expect": {
+        "refused": "unknown_caller"
+      }
+    }
+  ]
+}

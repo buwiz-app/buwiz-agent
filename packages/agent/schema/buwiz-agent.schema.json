@@ -1,0 +1,2050 @@
+{
+  "$defs": {
+    "ActorId": {
+      "maxLength": 64,
+      "pattern": "^[a-z][a-z0-9_-]*(\\.[a-z][a-z0-9_-]*)*$",
+      "type": "string"
+    },
+    "AddedNode": {
+      "additionalProperties": false,
+      "description": "A node in the new revision that the old one lacks. `parent` is the id it\nattaches under; absent means top level. gpui-agent flattens `node`, but\nserde cannot refuse a flattened struct's unknown fields.",
+      "properties": {
+        "node": {
+          "$ref": "#/$defs/UiNode"
+        },
+        "parent": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/AgentId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "node"
+      ],
+      "type": "object"
+    },
+    "AgentEvent": {
+      "additionalProperties": false,
+      "description": "One host event. `seq` is the only ordering: events carry no clock.\n`source` is the emitting component (gpui-agent's `target`).",
+      "properties": {
+        "level": {
+          "$ref": "#/$defs/EventLevel"
+        },
+        "message": {
+          "type": "string"
+        },
+        "seq": {
+          "$ref": "#/$defs/SafeU64"
+        },
+        "source": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "seq",
+        "level",
+        "source",
+        "message"
+      ],
+      "type": "object"
+    },
+    "AgentId": {
+      "maxLength": 128,
+      "pattern": "^[a-z][a-z0-9_-]*(\\.[a-z][a-z0-9_-]*)*$",
+      "type": "string"
+    },
+    "Allowed": {
+      "additionalProperties": false,
+      "description": "A press that may go ahead.",
+      "properties": {
+        "action": {
+          "$ref": "#/$defs/AgentId"
+        },
+        "effect": {
+          "$ref": "#/$defs/Effect"
+        },
+        "pressed": {
+          "$ref": "#/$defs/PressedBy"
+        },
+        "target": {
+          "$ref": "#/$defs/Target"
+        }
+      },
+      "required": [
+        "target",
+        "action",
+        "effect",
+        "pressed"
+      ],
+      "type": "object"
+    },
+    "Approval": {
+      "additionalProperties": false,
+      "description": "The person's yes to exactly one press.",
+      "properties": {
+        "action": {
+          "$ref": "#/$defs/AgentId"
+        },
+        "approved_by": {
+          "$ref": "#/$defs/ActorId"
+        },
+        "once": {
+          "$ref": "#/$defs/OnceId"
+        },
+        "target": {
+          "$ref": "#/$defs/Target"
+        }
+      },
+      "required": [
+        "target",
+        "action",
+        "once",
+        "approved_by"
+      ],
+      "type": "object"
+    },
+    "AssertSpec": {
+      "additionalProperties": false,
+      "description": "What `assert` and `wait_until` check about one node.",
+      "properties": {
+        "checked": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "exists": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "in_viewport": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "node": {
+          "$ref": "#/$defs/AgentId"
+        },
+        "role": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "value": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "visible": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "node"
+      ],
+      "type": "object"
+    },
+    "Bounds": {
+      "additionalProperties": false,
+      "description": "Bounds in whole logical pixels. gpui-agent uses f32; this crate has no\nfloats, so a host rounds. Hosts that cannot measure send zeros.",
+      "properties": {
+        "h": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "w": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "x": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "y": {
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "x",
+        "y",
+        "w",
+        "h"
+      ],
+      "type": "object"
+    },
+    "Caller": {
+      "description": "Who is pressing.",
+      "oneOf": [
+        {
+          "additionalProperties": false,
+          "description": "A person, at the app.",
+          "properties": {
+            "kind": {
+              "const": "person",
+              "type": "string"
+            },
+            "who": {
+              "$ref": "#/$defs/ActorId"
+            }
+          },
+          "required": [
+            "kind",
+            "who"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "description": "The AI. `approval` is the person's yes, when there is one.",
+          "properties": {
+            "approval": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/Approval"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "kind": {
+              "const": "agent",
+              "type": "string"
+            },
+            "who": {
+              "$ref": "#/$defs/ActorId"
+            }
+          },
+          "required": [
+            "kind",
+            "who"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "description": "A scheduled routine. Nobody is there to approve anything.",
+          "properties": {
+            "kind": {
+              "const": "routine",
+              "type": "string"
+            },
+            "who": {
+              "$ref": "#/$defs/ActorId"
+            }
+          },
+          "required": [
+            "kind",
+            "who"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "Challenge": {
+      "additionalProperties": false,
+      "description": "The first line a host with a token writes on a new connection. The client\nanswers by putting HMAC-SHA256(token, nonce) in `auth` on each request.",
+      "properties": {
+        "nonce": {
+          "description": "32 random bytes as lowercase hex.",
+          "type": "string"
+        },
+        "op": {
+          "$ref": "#/$defs/ChallengeOp"
+        },
+        "target": {
+          "$ref": "#/$defs/Target",
+          "description": "The app whose host issued the challenge."
+        },
+        "v": {
+          "$ref": "#/$defs/Version"
+        }
+      },
+      "required": [
+        "v",
+        "target",
+        "op",
+        "nonce"
+      ],
+      "type": "object"
+    },
+    "ChallengeOp": {
+      "description": "The tag of a challenge.",
+      "enum": [
+        "challenge"
+      ],
+      "type": "string"
+    },
+    "ChangedNode": {
+      "additionalProperties": false,
+      "description": "A node in both revisions with at least one differing field. `fields`\nholds only the new values.",
+      "properties": {
+        "fields": {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        "id": {
+          "$ref": "#/$defs/AgentId"
+        }
+      },
+      "required": [
+        "id",
+        "fields"
+      ],
+      "type": "object"
+    },
+    "ContentHash": {
+      "maxLength": 71,
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "CtxRef": {
+      "maxLength": 256,
+      "pattern": "^ctx://[a-z][a-z0-9_-]{0,31}/(?!\\.{1,2}(/|$))[A-Za-z0-9._-]+(/(?!\\.{1,2}(/|$))[A-Za-z0-9._-]+)*$",
+      "type": "string"
+    },
+    "DeliveryMode": {
+      "description": "How click, type and key reach the app. `semantic` (the default) calls the\nwidget's handler by id; `virtual` synthesizes in-window events.",
+      "enum": [
+        "semantic",
+        "virtual"
+      ],
+      "type": "string"
+    },
+    "Effect": {
+      "description": "What a tool or action does to the world.",
+      "oneOf": [
+        {
+          "const": "read",
+          "description": "Looks, changes nothing.",
+          "type": "string"
+        },
+        {
+          "const": "draft",
+          "description": "Makes something a person can still review and throw away.",
+          "type": "string"
+        },
+        {
+          "const": "write",
+          "description": "Changes the record: post, void, close, reopen.",
+          "type": "string"
+        },
+        {
+          "const": "file",
+          "description": "Sends something outside, such as a return to the BIR.",
+          "type": "string"
+        }
+      ]
+    },
+    "Envelope": {
+      "description": "One request: which app it is for, who is asking, and the op, whose fields\nsit beside these on the wire.",
+      "oneOf": [
+        {
+          "properties": {
+            "op": {
+              "const": "hello",
+              "type": "string"
+            }
+          },
+          "required": [
+            "op"
+          ],
+          "type": "object"
+        },
+        {
+          "description": "Read the tree. `since` asks for a diff against a revision the client\nholds, and `fingerprints` adds an id to fingerprint map.",
+          "properties": {
+            "fingerprints": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "format": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/SnapshotFormat"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "op": {
+              "const": "snapshot",
+              "type": "string"
+            },
+            "since": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/SafeU64"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "op"
+          ],
+          "type": "object"
+        },
+        {
+          "properties": {
+            "op": {
+              "const": "revision",
+              "type": "string"
+            }
+          },
+          "required": [
+            "op"
+          ],
+          "type": "object"
+        },
+        {
+          "description": "Poll the bounded event stream for events after `since`.",
+          "properties": {
+            "limit": {
+              "format": "uint32",
+              "minimum": 0,
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "op": {
+              "const": "events",
+              "type": "string"
+            },
+            "since": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/SafeU64"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "op"
+          ],
+          "type": "object"
+        },
+        {
+          "description": "`expect_fingerprint`, here and on the other input ops, is the\nstaleness gate: on a mismatch nothing happens.",
+          "properties": {
+            "delivery": {
+              "$ref": "#/$defs/DeliveryMode"
+            },
+            "expect_fingerprint": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/Fingerprint"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "node": {
+              "$ref": "#/$defs/AgentId"
+            },
+            "op": {
+              "const": "click",
+              "type": "string"
+            }
+          },
+          "required": [
+            "op",
+            "node"
+          ],
+          "type": "object"
+        },
+        {
+          "properties": {
+            "delivery": {
+              "$ref": "#/$defs/DeliveryMode"
+            },
+            "expect_fingerprint": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/Fingerprint"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "node": {
+              "$ref": "#/$defs/AgentId"
+            },
+            "op": {
+              "const": "type",
+              "type": "string"
+            },
+            "text": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "op",
+            "node",
+            "text"
+          ],
+          "type": "object"
+        },
+        {
+          "properties": {
+            "expect_fingerprint": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/Fingerprint"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "node": {
+              "$ref": "#/$defs/AgentId"
+            },
+            "op": {
+              "const": "set_value",
+              "type": "string"
+            },
+            "value": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "op",
+            "node",
+            "value"
+          ],
+          "type": "object"
+        },
+        {
+          "properties": {
+            "delivery": {
+              "$ref": "#/$defs/DeliveryMode"
+            },
+            "expect_fingerprint": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/Fingerprint"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "key": {
+              "type": "string"
+            },
+            "node": {
+              "$ref": "#/$defs/AgentId"
+            },
+            "op": {
+              "const": "key",
+              "type": "string"
+            }
+          },
+          "required": [
+            "op",
+            "node",
+            "key"
+          ],
+          "type": "object"
+        },
+        {
+          "description": "Fire an action by its binding id.",
+          "properties": {
+            "activate": {
+              "type": "boolean"
+            },
+            "binding": {
+              "type": "string"
+            },
+            "chord": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "confirm": {
+              "type": "boolean"
+            },
+            "op": {
+              "const": "keybinding",
+              "type": "string"
+            },
+            "scope": {
+              "$ref": "#/$defs/KeybindingScope"
+            }
+          },
+          "required": [
+            "op",
+            "binding",
+            "scope"
+          ],
+          "type": "object"
+        },
+        {
+          "properties": {
+            "op": {
+              "const": "keybindings",
+              "type": "string"
+            }
+          },
+          "required": [
+            "op"
+          ],
+          "type": "object"
+        },
+        {
+          "description": "What `assert` and `wait_until` check about one node.",
+          "properties": {
+            "checked": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "exists": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "in_viewport": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "name": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "node": {
+              "$ref": "#/$defs/AgentId"
+            },
+            "op": {
+              "const": "assert",
+              "type": "string"
+            },
+            "role": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "value": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "visible": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "op",
+            "node"
+          ],
+          "type": "object"
+        },
+        {
+          "properties": {
+            "args": true,
+            "name": {
+              "$ref": "#/$defs/AgentId"
+            },
+            "op": {
+              "const": "invoke",
+              "type": "string"
+            }
+          },
+          "required": [
+            "op",
+            "name"
+          ],
+          "type": "object"
+        },
+        {
+          "description": "Wait for the host to be ready.",
+          "properties": {
+            "op": {
+              "const": "wait",
+              "type": "string"
+            },
+            "timeout_ms": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/SafeU64"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "op"
+          ],
+          "type": "object"
+        },
+        {
+          "description": "Poll `until` until it holds or `timeout_ms` passes. gpui-agent flattens\nthe spec; serde cannot refuse unknown fields through a flatten here.",
+          "properties": {
+            "op": {
+              "const": "wait_until",
+              "type": "string"
+            },
+            "timeout_ms": {
+              "$ref": "#/$defs/SafeU64"
+            },
+            "until": {
+              "$ref": "#/$defs/AssertSpec"
+            }
+          },
+          "required": [
+            "op",
+            "timeout_ms",
+            "until"
+          ],
+          "type": "object"
+        },
+        {
+          "properties": {
+            "op": {
+              "const": "shutdown",
+              "type": "string"
+            }
+          },
+          "required": [
+            "op"
+          ],
+          "type": "object"
+        },
+        {
+          "description": "A PNG of the app's surface, written by the host to `path`. `node`\nnames the scroll view when `mode` is `scrolled`.",
+          "properties": {
+            "max_height_px": {
+              "format": "uint32",
+              "minimum": 0,
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "mode": {
+              "$ref": "#/$defs/ScreenshotMode"
+            },
+            "node": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/AgentId"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "op": {
+              "const": "screenshot",
+              "type": "string"
+            },
+            "path": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "op"
+          ],
+          "type": "object"
+        }
+      ],
+      "properties": {
+        "auth": {
+          "description": "HMAC-SHA256(token, session nonce) as lowercase hex. Never the raw token.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "caller": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Caller"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Set by the host from how the message arrived. Absent means nobody\nestablished a caller, and every press is refused."
+        },
+        "id": {
+          "type": "string"
+        },
+        "target": {
+          "$ref": "#/$defs/Target"
+        },
+        "v": {
+          "$ref": "#/$defs/Version"
+        }
+      },
+      "required": [
+        "v",
+        "id",
+        "target"
+      ],
+      "type": "object",
+      "unevaluatedProperties": false
+    },
+    "EventLevel": {
+      "description": "Severity of one event.",
+      "enum": [
+        "trace",
+        "debug",
+        "info",
+        "warn",
+        "error"
+      ],
+      "type": "string"
+    },
+    "EventPoll": {
+      "additionalProperties": false,
+      "description": "`result` of `events`. `lagged` means events were lost to the ring's limit.",
+      "properties": {
+        "events": {
+          "items": {
+            "$ref": "#/$defs/AgentEvent"
+          },
+          "type": "array"
+        },
+        "lagged": {
+          "type": "boolean"
+        },
+        "latest": {
+          "$ref": "#/$defs/SafeU64"
+        }
+      },
+      "required": [
+        "events",
+        "latest",
+        "lagged"
+      ],
+      "type": "object"
+    },
+    "Fill": {
+      "additionalProperties": false,
+      "description": "One input filled in from shared context rather than by the caller. It\nnames where the value comes from (such as `period`), never the value.",
+      "properties": {
+        "from": {
+          "$ref": "#/$defs/AgentId",
+          "description": "The context key that supplies it."
+        },
+        "need": {
+          "$ref": "#/$defs/AgentId",
+          "description": "The need this fills."
+        }
+      },
+      "required": [
+        "need",
+        "from"
+      ],
+      "type": "object"
+    },
+    "Fingerprint": {
+      "maxLength": 16,
+      "pattern": "^[0-9a-f]{16}$",
+      "type": "string"
+    },
+    "Grant": {
+      "additionalProperties": false,
+      "description": "Which apps may read a ref.",
+      "properties": {
+        "ctx": {
+          "$ref": "#/$defs/CtxRef"
+        },
+        "readers": {
+          "items": {
+            "$ref": "#/$defs/Target"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "ctx",
+        "readers"
+      ],
+      "type": "object"
+    },
+    "HelloAuth": {
+      "description": "Whether the host needs `auth` on every request.",
+      "enum": [
+        "none",
+        "required"
+      ],
+      "type": "string"
+    },
+    "HelloInfo": {
+      "additionalProperties": false,
+      "description": "The `hello` answer. `targets` lists the apps this host routes to.",
+      "properties": {
+        "auth": {
+          "$ref": "#/$defs/HelloAuth"
+        },
+        "deliveries": {
+          "items": {
+            "$ref": "#/$defs/DeliveryMode"
+          },
+          "type": "array"
+        },
+        "features": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "os": {
+          "type": "string"
+        },
+        "platform": {
+          "$ref": "#/$defs/PlatformKind"
+        },
+        "protocol": {
+          "$ref": "#/$defs/Version"
+        },
+        "ready": {
+          "type": "boolean"
+        },
+        "targets": {
+          "items": {
+            "$ref": "#/$defs/Target"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "protocol",
+        "targets",
+        "platform",
+        "os",
+        "ready",
+        "auth"
+      ],
+      "type": "object"
+    },
+    "KeybindingInfo": {
+      "additionalProperties": false,
+      "description": "One entry of the `keybindings` result.",
+      "properties": {
+        "chord": {
+          "type": "string"
+        },
+        "dangerous": {
+          "type": "boolean"
+        },
+        "id": {
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/KeybindingScope"
+        }
+      },
+      "required": [
+        "id",
+        "chord",
+        "scope",
+        "dangerous"
+      ],
+      "type": "object"
+    },
+    "KeybindingScope": {
+      "description": "Which keymap a `keybinding` fires in.",
+      "enum": [
+        "focused",
+        "global"
+      ],
+      "type": "string"
+    },
+    "Need": {
+      "additionalProperties": false,
+      "description": "One input a tool needs.",
+      "properties": {
+        "about": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "kind": {
+          "$ref": "#/$defs/ValueKind"
+        },
+        "name": {
+          "$ref": "#/$defs/AgentId"
+        }
+      },
+      "required": [
+        "name",
+        "kind"
+      ],
+      "type": "object"
+    },
+    "OnceId": {
+      "maxLength": 64,
+      "pattern": "^[a-z][a-z0-9-]{7,63}$",
+      "type": "string"
+    },
+    "Op": {
+      "description": "What a message asks the target to do. Ops without fields are written as\nempty struct variants because serde would ignore extra fields on unit ones.",
+      "oneOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "op": {
+              "const": "hello",
+              "type": "string"
+            }
+          },
+          "required": [
+            "op"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "description": "Read the tree. `since` asks for a diff against a revision the client\nholds, and `fingerprints` adds an id to fingerprint map.",
+          "properties": {
+            "fingerprints": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "format": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/SnapshotFormat"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "op": {
+              "const": "snapshot",
+              "type": "string"
+            },
+            "since": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/SafeU64"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "op"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "op": {
+              "const": "revision",
+              "type": "string"
+            }
+          },
+          "required": [
+            "op"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "description": "Poll the bounded event stream for events after `since`.",
+          "properties": {
+            "limit": {
+              "format": "uint32",
+              "minimum": 0,
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "op": {
+              "const": "events",
+              "type": "string"
+            },
+            "since": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/SafeU64"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "op"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "description": "`expect_fingerprint`, here and on the other input ops, is the\nstaleness gate: on a mismatch nothing happens.",
+          "properties": {
+            "delivery": {
+              "$ref": "#/$defs/DeliveryMode"
+            },
+            "expect_fingerprint": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/Fingerprint"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "node": {
+              "$ref": "#/$defs/AgentId"
+            },
+            "op": {
+              "const": "click",
+              "type": "string"
+            }
+          },
+          "required": [
+            "op",
+            "node"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "delivery": {
+              "$ref": "#/$defs/DeliveryMode"
+            },
+            "expect_fingerprint": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/Fingerprint"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "node": {
+              "$ref": "#/$defs/AgentId"
+            },
+            "op": {
+              "const": "type",
+              "type": "string"
+            },
+            "text": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "op",
+            "node",
+            "text"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "expect_fingerprint": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/Fingerprint"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "node": {
+              "$ref": "#/$defs/AgentId"
+            },
+            "op": {
+              "const": "set_value",
+              "type": "string"
+            },
+            "value": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "op",
+            "node",
+            "value"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "delivery": {
+              "$ref": "#/$defs/DeliveryMode"
+            },
+            "expect_fingerprint": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/Fingerprint"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "key": {
+              "type": "string"
+            },
+            "node": {
+              "$ref": "#/$defs/AgentId"
+            },
+            "op": {
+              "const": "key",
+              "type": "string"
+            }
+          },
+          "required": [
+            "op",
+            "node",
+            "key"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "description": "Fire an action by its binding id.",
+          "properties": {
+            "activate": {
+              "type": "boolean"
+            },
+            "binding": {
+              "type": "string"
+            },
+            "chord": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "confirm": {
+              "type": "boolean"
+            },
+            "op": {
+              "const": "keybinding",
+              "type": "string"
+            },
+            "scope": {
+              "$ref": "#/$defs/KeybindingScope"
+            }
+          },
+          "required": [
+            "op",
+            "binding",
+            "scope"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "op": {
+              "const": "keybindings",
+              "type": "string"
+            }
+          },
+          "required": [
+            "op"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "description": "What `assert` and `wait_until` check about one node.",
+          "properties": {
+            "checked": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "exists": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "in_viewport": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "name": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "node": {
+              "$ref": "#/$defs/AgentId"
+            },
+            "op": {
+              "const": "assert",
+              "type": "string"
+            },
+            "role": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "value": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "visible": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "op",
+            "node"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "args": true,
+            "name": {
+              "$ref": "#/$defs/AgentId"
+            },
+            "op": {
+              "const": "invoke",
+              "type": "string"
+            }
+          },
+          "required": [
+            "op",
+            "name"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "description": "Wait for the host to be ready.",
+          "properties": {
+            "op": {
+              "const": "wait",
+              "type": "string"
+            },
+            "timeout_ms": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/SafeU64"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "op"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "description": "Poll `until` until it holds or `timeout_ms` passes. gpui-agent flattens\nthe spec; serde cannot refuse unknown fields through a flatten here.",
+          "properties": {
+            "op": {
+              "const": "wait_until",
+              "type": "string"
+            },
+            "timeout_ms": {
+              "$ref": "#/$defs/SafeU64"
+            },
+            "until": {
+              "$ref": "#/$defs/AssertSpec"
+            }
+          },
+          "required": [
+            "op",
+            "timeout_ms",
+            "until"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "op": {
+              "const": "shutdown",
+              "type": "string"
+            }
+          },
+          "required": [
+            "op"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "description": "A PNG of the app's surface, written by the host to `path`. `node`\nnames the scroll view when `mode` is `scrolled`.",
+          "properties": {
+            "max_height_px": {
+              "format": "uint32",
+              "minimum": 0,
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "mode": {
+              "$ref": "#/$defs/ScreenshotMode"
+            },
+            "node": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/AgentId"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "op": {
+              "const": "screenshot",
+              "type": "string"
+            },
+            "path": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "op"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "PlatformKind": {
+      "description": "Which runtime is answering.",
+      "enum": [
+        "desktop",
+        "headless",
+        "web",
+        "mobile"
+      ],
+      "type": "string"
+    },
+    "PressAction": {
+      "additionalProperties": false,
+      "description": "The press being decided, as the host knows it.",
+      "properties": {
+        "effect": {
+          "$ref": "#/$defs/Effect"
+        },
+        "id": {
+          "$ref": "#/$defs/AgentId"
+        },
+        "once": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/OnceId"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The open press's one-time id. Absent when the host has no open press\nfor this action."
+        },
+        "target": {
+          "$ref": "#/$defs/Target"
+        }
+      },
+      "required": [
+        "target",
+        "id",
+        "effect"
+      ],
+      "type": "object"
+    },
+    "PressedBy": {
+      "description": "Whose press this was, to show and to log.",
+      "oneOf": [
+        {
+          "additionalProperties": false,
+          "description": "The person pressed it.",
+          "properties": {
+            "by": {
+              "const": "person",
+              "type": "string"
+            },
+            "who": {
+              "$ref": "#/$defs/ActorId"
+            }
+          },
+          "required": [
+            "by",
+            "who"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "description": "The AI pressed it after the person approved this press. The host\nretires `once` now.",
+          "properties": {
+            "approved_by": {
+              "$ref": "#/$defs/ActorId"
+            },
+            "by": {
+              "const": "ai_approved",
+              "type": "string"
+            },
+            "once": {
+              "$ref": "#/$defs/OnceId"
+            },
+            "who": {
+              "$ref": "#/$defs/ActorId"
+            }
+          },
+          "required": [
+            "by",
+            "who",
+            "approved_by",
+            "once"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "description": "The AI pressed something that needs no person.",
+          "properties": {
+            "by": {
+              "const": "ai",
+              "type": "string"
+            },
+            "who": {
+              "$ref": "#/$defs/ActorId"
+            }
+          },
+          "required": [
+            "by",
+            "who"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "description": "A routine pressed something that needs no person.",
+          "properties": {
+            "by": {
+              "const": "routine",
+              "type": "string"
+            },
+            "who": {
+              "$ref": "#/$defs/ActorId"
+            }
+          },
+          "required": [
+            "by",
+            "who"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "Provenance": {
+      "additionalProperties": false,
+      "description": "Where a piece of context came from. Holds no content, only handles and a\nhash of it.",
+      "properties": {
+        "content_hash": {
+          "$ref": "#/$defs/ContentHash",
+          "description": "The hash of its content."
+        },
+        "from": {
+          "description": "What it was made from. Empty for an original, such as an upload.",
+          "items": {
+            "$ref": "#/$defs/CtxRef"
+          },
+          "type": "array"
+        },
+        "made_by": {
+          "$ref": "#/$defs/ActorId",
+          "description": "Who made it."
+        }
+      },
+      "required": [
+        "made_by",
+        "from",
+        "content_hash"
+      ],
+      "type": "object"
+    },
+    "Refused": {
+      "description": "Why a press may not go ahead.",
+      "oneOf": [
+        {
+          "const": "unknown_action",
+          "description": "The action is missing, malformed, or has an effect nobody knows.",
+          "type": "string"
+        },
+        {
+          "const": "unknown_caller",
+          "description": "The caller is missing, malformed, or of a kind nobody knows.",
+          "type": "string"
+        },
+        {
+          "const": "routine_needs_person",
+          "description": "A routine reached for an action that needs a person.",
+          "type": "string"
+        },
+        {
+          "const": "approval_missing",
+          "description": "The AI has no approval for an action that needs a person.",
+          "type": "string"
+        },
+        {
+          "const": "approval_not_person",
+          "description": "The approval names no person, so the AI can't approve its own press.",
+          "type": "string"
+        },
+        {
+          "const": "approval_wrong_target",
+          "description": "The approval is for another app.",
+          "type": "string"
+        },
+        {
+          "const": "approval_wrong_action",
+          "description": "The approval is for another action.",
+          "type": "string"
+        },
+        {
+          "const": "no_open_press",
+          "description": "The host has no open press for this action, so no approval can match.",
+          "type": "string"
+        },
+        {
+          "const": "approval_wrong_press",
+          "description": "The approval is for another press of this action, such as a used one.",
+          "type": "string"
+        }
+      ]
+    },
+    "Response": {
+      "additionalProperties": false,
+      "description": "One answer. `id` matches the request and `target` is the app that answered.",
+      "properties": {
+        "error": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "fingerprints": {
+          "additionalProperties": false,
+          "patternProperties": {
+            "^[a-z][a-z0-9_-]*(\\.[a-z][a-z0-9_-]*)*$": {
+              "$ref": "#/$defs/Fingerprint"
+            }
+          },
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "hello": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/HelloInfo"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "id": {
+          "type": "string"
+        },
+        "ok": {
+          "type": "boolean"
+        },
+        "result": true,
+        "rev": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SafeU64"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "target": {
+          "$ref": "#/$defs/Target"
+        },
+        "tree": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/UiTree"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "v": {
+          "$ref": "#/$defs/Version"
+        }
+      },
+      "required": [
+        "v",
+        "id",
+        "target",
+        "ok"
+      ],
+      "type": "object"
+    },
+    "Returns": {
+      "additionalProperties": false,
+      "description": "What a tool gives back.",
+      "properties": {
+        "about": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "kind": {
+          "$ref": "#/$defs/ValueKind"
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "type": "object"
+    },
+    "SafeU64": {
+      "maximum": 9007199254740991,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "ScreenshotMode": {
+      "description": "How `screenshot` captures: the painted window, or scrolled and stitched.",
+      "enum": [
+        "viewport",
+        "scrolled"
+      ],
+      "type": "string"
+    },
+    "SnapshotFormat": {
+      "description": "The `snapshot` answer's form: the JSON tree, or one line per visible node.",
+      "enum": [
+        "json",
+        "compact"
+      ],
+      "type": "string"
+    },
+    "SnapshotResult": {
+      "additionalProperties": false,
+      "description": "`result` of a `snapshot` with `since` or `format: \"compact\"`. One of:\nnothing changed; a diff; the full tree is in `tree` because the revision\nis too old; or the compact text.",
+      "properties": {
+        "compact": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "diff": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TreeDiff"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "full": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "unchanged": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "Target": {
+      "maxLength": 16,
+      "pattern": "^[a-z][a-z0-9]{1,15}$",
+      "type": "string"
+    },
+    "ToolSpec": {
+      "additionalProperties": false,
+      "description": "One operation. All of `effect`, `needs`, `fills_in` and `returns` are\nrequired on the wire: an empty list is a statement, a missing one is not.",
+      "properties": {
+        "about": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "effect": {
+          "$ref": "#/$defs/Effect"
+        },
+        "fills_in": {
+          "items": {
+            "$ref": "#/$defs/Fill"
+          },
+          "type": "array"
+        },
+        "name": {
+          "$ref": "#/$defs/AgentId"
+        },
+        "needs": {
+          "items": {
+            "$ref": "#/$defs/Need"
+          },
+          "type": "array"
+        },
+        "returns": {
+          "$ref": "#/$defs/Returns"
+        },
+        "target": {
+          "$ref": "#/$defs/Target"
+        }
+      },
+      "required": [
+        "target",
+        "name",
+        "effect",
+        "needs",
+        "fills_in",
+        "returns"
+      ],
+      "type": "object"
+    },
+    "TreeDiff": {
+      "additionalProperties": false,
+      "description": "What a client at one revision needs to reach another.",
+      "properties": {
+        "added": {
+          "items": {
+            "$ref": "#/$defs/AddedNode"
+          },
+          "type": "array"
+        },
+        "changed": {
+          "items": {
+            "$ref": "#/$defs/ChangedNode"
+          },
+          "type": "array"
+        },
+        "removed": {
+          "items": {
+            "$ref": "#/$defs/AgentId"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "added",
+        "removed",
+        "changed"
+      ],
+      "type": "object"
+    },
+    "UiNode": {
+      "additionalProperties": false,
+      "description": "One node. `visible` is left out when true, and `states` and `children`\nwhen empty.",
+      "properties": {
+        "bounds": {
+          "$ref": "#/$defs/Bounds"
+        },
+        "checked": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "children": {
+          "items": {
+            "$ref": "#/$defs/UiNode"
+          },
+          "type": "array"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "focused": {
+          "type": "boolean"
+        },
+        "id": {
+          "$ref": "#/$defs/AgentId"
+        },
+        "name": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        },
+        "states": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "value": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "visible": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id",
+        "role",
+        "name",
+        "enabled",
+        "focused",
+        "bounds"
+      ],
+      "type": "object"
+    },
+    "UiTree": {
+      "additionalProperties": false,
+      "description": "One app's tree at one revision.",
+      "properties": {
+        "nodes": {
+          "items": {
+            "$ref": "#/$defs/UiNode"
+          },
+          "type": "array"
+        },
+        "platform": {
+          "$ref": "#/$defs/PlatformKind"
+        },
+        "ready": {
+          "type": "boolean"
+        },
+        "rev": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SafeU64"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Absent when the host tracks no revision: rebuild, do not cache."
+        },
+        "target": {
+          "$ref": "#/$defs/Target"
+        }
+      },
+      "required": [
+        "target",
+        "platform",
+        "ready",
+        "nodes"
+      ],
+      "type": "object"
+    },
+    "ValueKind": {
+      "description": "The shape of an input or a result. Amounts are integers (centavos), so\nthere is no decimal kind.",
+      "oneOf": [
+        {
+          "enum": [
+            "text",
+            "integer",
+            "boolean",
+            "object",
+            "list"
+          ],
+          "type": "string"
+        },
+        {
+          "const": "ctx",
+          "description": "A `ctx://` ref.",
+          "type": "string"
+        }
+      ]
+    },
+    "Version": {
+      "const": 1
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Generated from crates/agent by buwiz-agent-gen (schemars). Do not edit.",
+  "title": "Buwiz agent types"
+}

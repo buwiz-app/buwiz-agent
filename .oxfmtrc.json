@@ -1,0 +1,4 @@
+{
+  "printWidth": 160,
+  "ignorePatterns": ["vectors/**", "target/**", "packages/agent/src/generated.ts", "packages/agent/schema/**"]
+}

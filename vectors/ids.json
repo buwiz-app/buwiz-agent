@@ -1,0 +1,552 @@
+{
+  "about": "Names and small values. type: which parser; input: any JSON; valid: whether it parses. All values are fakes.",
+  "cases": [
+    {
+      "type": "Target",
+      "input": "bot",
+      "valid": true
+    },
+    {
+      "type": "Target",
+      "input": "books",
+      "valid": true
+    },
+    {
+      "type": "Target",
+      "input": "ebirforms",
+      "valid": true
+    },
+    {
+      "type": "Target",
+      "input": "sheet",
+      "valid": true
+    },
+    {
+      "type": "Target",
+      "input": "word2",
+      "valid": true
+    },
+    {
+      "type": "Target",
+      "input": "a1",
+      "valid": true
+    },
+    {
+      "type": "Target",
+      "input": "abcdefghijklmnop",
+      "valid": true
+    },
+    {
+      "type": "Target",
+      "input": "",
+      "valid": false
+    },
+    {
+      "type": "Target",
+      "input": "b",
+      "valid": false
+    },
+    {
+      "type": "Target",
+      "input": "Books",
+      "valid": false
+    },
+    {
+      "type": "Target",
+      "input": "BOT",
+      "valid": false
+    },
+    {
+      "type": "Target",
+      "input": "books ",
+      "valid": false
+    },
+    {
+      "type": "Target",
+      "input": "books\n",
+      "valid": false
+    },
+    {
+      "type": "Target",
+      "input": " books",
+      "valid": false
+    },
+    {
+      "type": "Target",
+      "input": "e-bir",
+      "valid": false
+    },
+    {
+      "type": "Target",
+      "input": "e_bir",
+      "valid": false
+    },
+    {
+      "type": "Target",
+      "input": "1books",
+      "valid": false
+    },
+    {
+      "type": "Target",
+      "input": "books.ledger",
+      "valid": false
+    },
+    {
+      "type": "Target",
+      "input": "abcdefghijklmnopq",
+      "valid": false
+    },
+    {
+      "type": "Target",
+      "input": "bоoks",
+      "valid": false
+    },
+    {
+      "type": "Target",
+      "input": null,
+      "valid": false
+    },
+    {
+      "type": "Target",
+      "input": 7,
+      "valid": false
+    },
+    {
+      "type": "Target",
+      "input": true,
+      "valid": false
+    },
+    {
+      "type": "Target",
+      "input": [
+        "books"
+      ],
+      "valid": false
+    },
+    {
+      "type": "Target",
+      "input": {},
+      "valid": false
+    },
+    {
+      "type": "AgentId",
+      "input": "ledger.post",
+      "valid": true
+    },
+    {
+      "type": "AgentId",
+      "input": "post",
+      "valid": true
+    },
+    {
+      "type": "AgentId",
+      "input": "todo-list-scroll",
+      "valid": true
+    },
+    {
+      "type": "AgentId",
+      "input": "books_ledger_list",
+      "valid": true
+    },
+    {
+      "type": "AgentId",
+      "input": "a.b.c",
+      "valid": true
+    },
+    {
+      "type": "AgentId",
+      "input": "month.close-2",
+      "valid": true
+    },
+    {
+      "type": "AgentId",
+      "input": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "valid": true
+    },
+    {
+      "type": "AgentId",
+      "input": "",
+      "valid": false
+    },
+    {
+      "type": "AgentId",
+      "input": ".post",
+      "valid": false
+    },
+    {
+      "type": "AgentId",
+      "input": "post.",
+      "valid": false
+    },
+    {
+      "type": "AgentId",
+      "input": "a..b",
+      "valid": false
+    },
+    {
+      "type": "AgentId",
+      "input": "Ledger.post",
+      "valid": false
+    },
+    {
+      "type": "AgentId",
+      "input": "ledger.Post",
+      "valid": false
+    },
+    {
+      "type": "AgentId",
+      "input": "ledger post",
+      "valid": false
+    },
+    {
+      "type": "AgentId",
+      "input": "ledger.post\n",
+      "valid": false
+    },
+    {
+      "type": "AgentId",
+      "input": "1ledger.post",
+      "valid": false
+    },
+    {
+      "type": "AgentId",
+      "input": "ledger.1post",
+      "valid": false
+    },
+    {
+      "type": "AgentId",
+      "input": "ledger/post",
+      "valid": false
+    },
+    {
+      "type": "AgentId",
+      "input": "ledger:post",
+      "valid": false
+    },
+    {
+      "type": "AgentId",
+      "input": "-post",
+      "valid": false
+    },
+    {
+      "type": "AgentId",
+      "input": "_post",
+      "valid": false
+    },
+    {
+      "type": "AgentId",
+      "input": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "valid": false
+    },
+    {
+      "type": "AgentId",
+      "input": null,
+      "valid": false
+    },
+    {
+      "type": "AgentId",
+      "input": 12,
+      "valid": false
+    },
+    {
+      "type": "AgentId",
+      "input": {},
+      "valid": false
+    },
+    {
+      "type": "ActorId",
+      "input": "person.owner",
+      "valid": true
+    },
+    {
+      "type": "ActorId",
+      "input": "agent.broker",
+      "valid": true
+    },
+    {
+      "type": "ActorId",
+      "input": "routine.month-end",
+      "valid": true
+    },
+    {
+      "type": "ActorId",
+      "input": "owner",
+      "valid": true
+    },
+    {
+      "type": "ActorId",
+      "input": "",
+      "valid": false
+    },
+    {
+      "type": "ActorId",
+      "input": "someone@example.invalid",
+      "valid": false
+    },
+    {
+      "type": "ActorId",
+      "input": "000-000-000",
+      "valid": false
+    },
+    {
+      "type": "ActorId",
+      "input": "000000000000",
+      "valid": false
+    },
+    {
+      "type": "ActorId",
+      "input": "Person.Owner",
+      "valid": false
+    },
+    {
+      "type": "ActorId",
+      "input": "person owner",
+      "valid": false
+    },
+    {
+      "type": "ActorId",
+      "input": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "valid": false
+    },
+    {
+      "type": "ActorId",
+      "input": null,
+      "valid": false
+    },
+    {
+      "type": "ActorId",
+      "input": 0,
+      "valid": false
+    },
+    {
+      "type": "OnceId",
+      "input": "press-0001",
+      "valid": true
+    },
+    {
+      "type": "OnceId",
+      "input": "approve-a1b2c3d4",
+      "valid": true
+    },
+    {
+      "type": "OnceId",
+      "input": "abcdefgh",
+      "valid": true
+    },
+    {
+      "type": "OnceId",
+      "input": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "valid": true
+    },
+    {
+      "type": "OnceId",
+      "input": "",
+      "valid": false
+    },
+    {
+      "type": "OnceId",
+      "input": "press",
+      "valid": false
+    },
+    {
+      "type": "OnceId",
+      "input": "abcdefg",
+      "valid": false
+    },
+    {
+      "type": "OnceId",
+      "input": "1press-0001",
+      "valid": false
+    },
+    {
+      "type": "OnceId",
+      "input": "press_0001",
+      "valid": false
+    },
+    {
+      "type": "OnceId",
+      "input": "Press-0001",
+      "valid": false
+    },
+    {
+      "type": "OnceId",
+      "input": "press.0001",
+      "valid": false
+    },
+    {
+      "type": "OnceId",
+      "input": "press 0001",
+      "valid": false
+    },
+    {
+      "type": "OnceId",
+      "input": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "valid": false
+    },
+    {
+      "type": "OnceId",
+      "input": null,
+      "valid": false
+    },
+    {
+      "type": "OnceId",
+      "input": 1,
+      "valid": false
+    },
+    {
+      "type": "ContentHash",
+      "input": "sha256:abababababababababababababababababababababababababababababababab",
+      "valid": true
+    },
+    {
+      "type": "ContentHash",
+      "input": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+      "valid": true
+    },
+    {
+      "type": "ContentHash",
+      "input": "",
+      "valid": false
+    },
+    {
+      "type": "ContentHash",
+      "input": "sha256:",
+      "valid": false
+    },
+    {
+      "type": "ContentHash",
+      "input": "sha256:ababababababababababababababababababababababababababababababab",
+      "valid": false
+    },
+    {
+      "type": "ContentHash",
+      "input": "sha256:ababababababababababababababababababababababababababababababababab",
+      "valid": false
+    },
+    {
+      "type": "ContentHash",
+      "input": "sha256:ABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABAB",
+      "valid": false
+    },
+    {
+      "type": "ContentHash",
+      "input": "sha512:abababababababababababababababababababababababababababababababab",
+      "valid": false
+    },
+    {
+      "type": "ContentHash",
+      "input": "abababababababababababababababababababababababababababababababab",
+      "valid": false
+    },
+    {
+      "type": "ContentHash",
+      "input": "sha256:gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
+      "valid": false
+    },
+    {
+      "type": "ContentHash",
+      "input": null,
+      "valid": false
+    },
+    {
+      "type": "Fingerprint",
+      "input": "0123456789abcdef",
+      "valid": true
+    },
+    {
+      "type": "Fingerprint",
+      "input": "ffffffffffffffff",
+      "valid": true
+    },
+    {
+      "type": "Fingerprint",
+      "input": "",
+      "valid": false
+    },
+    {
+      "type": "Fingerprint",
+      "input": "0123456789abcde",
+      "valid": false
+    },
+    {
+      "type": "Fingerprint",
+      "input": "0123456789abcdef0",
+      "valid": false
+    },
+    {
+      "type": "Fingerprint",
+      "input": "0123456789ABCDEF",
+      "valid": false
+    },
+    {
+      "type": "Fingerprint",
+      "input": "012345678 abcdef",
+      "valid": false
+    },
+    {
+      "type": "Fingerprint",
+      "input": 1311768467463790320,
+      "valid": false
+    },
+    {
+      "type": "Fingerprint",
+      "input": null,
+      "valid": false
+    },
+    {
+      "type": "SafeU64",
+      "input": 0,
+      "valid": true
+    },
+    {
+      "type": "SafeU64",
+      "input": 1,
+      "valid": true
+    },
+    {
+      "type": "SafeU64",
+      "input": 4294967296,
+      "valid": true
+    },
+    {
+      "type": "SafeU64",
+      "input": 9007199254740991,
+      "valid": true
+    },
+    {
+      "type": "SafeU64",
+      "input": -1,
+      "valid": false
+    },
+    {
+      "type": "SafeU64",
+      "input": 1.5,
+      "valid": false
+    },
+    {
+      "type": "SafeU64",
+      "input": 9007199254740992,
+      "valid": false
+    },
+    {
+      "type": "SafeU64",
+      "input": 18446744073709551615,
+      "valid": false
+    },
+    {
+      "type": "SafeU64",
+      "input": "1",
+      "valid": false
+    },
+    {
+      "type": "SafeU64",
+      "input": null,
+      "valid": false
+    },
+    {
+      "type": "SafeU64",
+      "input": true,
+      "valid": false
+    }
+  ]
+}
