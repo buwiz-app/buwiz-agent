@@ -1,5 +1,6 @@
 //! Who pressed, and whether they may (D1). The AI may press a person-only
-//! action only after the person approves that one press.
+//! action only after the person approves that one press, and never a filing
+//! (O4): that stays a person's own act, approved or not.
 //!
 //! [`authorize_press`] decides and holds no state, so its answer is only as
 //! good as what the host gives it:
@@ -140,6 +141,8 @@ pub enum Refused {
     ApprovalWrongArgs,
     /// The approval is for another card than the one showing now.
     ApprovalWrongShown,
+    /// The AI reached for a filing: no approval covers one.
+    FilingNotForAgents,
 }
 
 impl Refused {
@@ -157,6 +160,7 @@ impl Refused {
             Self::ApprovalWrongPress => "approval_wrong_press",
             Self::ApprovalWrongArgs => "approval_wrong_args",
             Self::ApprovalWrongShown => "approval_wrong_shown",
+            Self::FilingNotForAgents => "filing_not_for_agents",
         }
     }
 }
@@ -181,6 +185,9 @@ pub fn authorize_press(
     let pressed = match caller {
         Caller::Person { who } if !is_person(who) => return Err(Refused::UnknownCaller),
         Caller::Person { who } => PressedBy::Person { who: who.clone() },
+        Caller::Agent { .. } if action.effect == Effect::File => {
+            return Err(Refused::FilingNotForAgents);
+        }
         Caller::Agent { who, .. } if !action.effect.needs_person() => {
             PressedBy::Ai { who: who.clone() }
         }

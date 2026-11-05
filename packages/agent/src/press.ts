@@ -34,6 +34,7 @@ const isPerson = (who: string): boolean => who.startsWith("person.");
 const decide = (action: PressAction, caller: Caller): PressedBy | Refused => {
   const { who } = caller;
   if (caller.kind === "person") return isPerson(who) ? { by: "person", who } : "unknown_caller";
+  if (caller.kind === "agent" && action.effect === "file") return "filing_not_for_agents";
   if (!needsPerson(action.effect)) return caller.kind === "agent" ? { by: "ai", who } : { by: "routine", who };
   if (caller.kind === "routine") return "routine_needs_person";
   const { approval } = caller;

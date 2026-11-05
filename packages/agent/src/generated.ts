@@ -174,7 +174,7 @@ export type Allowed = { target: Target, action: AgentId, effect: Effect, pressed
 /**
  * Why a press may not go ahead.
  */
-export type Refused = "unknown_action" | "unknown_caller" | "routine_needs_person" | "approval_missing" | "approval_not_person" | "approval_wrong_target" | "approval_wrong_action" | "no_open_press" | "approval_wrong_press" | "approval_wrong_args" | "approval_wrong_shown";
+export type Refused = "unknown_action" | "unknown_caller" | "routine_needs_person" | "approval_missing" | "approval_not_person" | "approval_wrong_target" | "approval_wrong_action" | "no_open_press" | "approval_wrong_press" | "approval_wrong_args" | "approval_wrong_shown" | "filing_not_for_agents";
 
 /**
  * Which runtime is answering.

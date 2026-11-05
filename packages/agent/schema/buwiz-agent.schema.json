@@ -1755,6 +1755,11 @@
           "const": "approval_wrong_shown",
           "description": "The approval is for another card than the one showing now.",
           "type": "string"
+        },
+        {
+          "const": "filing_not_for_agents",
+          "description": "The AI reached for a filing: no approval covers one.",
+          "type": "string"
         }
       ]
     },

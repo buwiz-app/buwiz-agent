@@ -160,7 +160,7 @@
       }
     },
     {
-      "name": "the AI presses File with its approval",
+      "name": "no approval lets the AI press File",
       "action": {
         "target": "books",
         "id": "return.file",
@@ -183,20 +183,7 @@
         }
       },
       "expect": {
-        "allowed": {
-          "target": "books",
-          "action": "return.file",
-          "effect": "file",
-          "pressed": {
-            "by": "ai_approved",
-            "who": "agent.broker",
-            "approved_by": "person.owner",
-            "once": "press-0001",
-            "args_hash": "sha256:a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
-            "shown_hash": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2",
-            "at": 1793745245000
-          }
-        }
+        "refused": "filing_not_for_agents"
       }
     },
     {
@@ -360,7 +347,7 @@
       }
     },
     {
-      "name": "the AI has no approval for a file action",
+      "name": "the AI reaches for a file action with no approval",
       "action": {
         "target": "books",
         "id": "ledger.post",
@@ -374,7 +361,7 @@
         "who": "agent.broker"
       },
       "expect": {
-        "refused": "approval_missing"
+        "refused": "filing_not_for_agents"
       }
     },
     {
