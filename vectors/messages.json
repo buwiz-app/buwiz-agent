@@ -415,7 +415,10 @@
             "target": "books",
             "action": "ledger.post",
             "once": "press-0001",
-            "approved_by": "person.owner"
+            "approved_by": "person.owner",
+            "args_hash": "sha256:a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+            "shown_hash": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2",
+            "at": 1793745245000
           }
         }
       },
@@ -703,7 +706,10 @@
           "target": "books",
           "action": "ledger.post",
           "once": "press-0001",
-          "approved_by": "person.owner"
+          "approved_by": "person.owner",
+          "args_hash": "sha256:a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+          "shown_hash": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2",
+          "at": 1793745245000
         }
       },
       "valid": false
@@ -915,7 +921,10 @@
             "target": "books",
             "action": "ledger.post",
             "once": "press-0001",
-            "approved_by": "person.owner"
+            "approved_by": "person.owner",
+            "args_hash": "sha256:a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+            "shown_hash": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2",
+            "at": 1793745245000
           }
         }
       },
@@ -2698,7 +2707,10 @@
         "target": "books",
         "action": "ledger.post",
         "once": "press-0001",
-        "approved_by": "person.owner"
+        "approved_by": "person.owner",
+        "args_hash": "sha256:a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+        "shown_hash": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2",
+        "at": 1793745245000
       },
       "valid": true
     },
@@ -2755,7 +2767,10 @@
           "target": "books",
           "action": "ledger.post",
           "once": "press-0001",
-          "approved_by": "person.owner"
+          "approved_by": "person.owner",
+          "args_hash": "sha256:a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+          "shown_hash": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2",
+          "at": 1793745245000
         }
       },
       "valid": false
@@ -2778,7 +2793,10 @@
         "by": "ai_approved",
         "who": "agent.broker",
         "approved_by": "person.owner",
-        "once": "press-0001"
+        "once": "press-0001",
+        "args_hash": "sha256:a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+        "shown_hash": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2",
+        "at": 1793745245000
       },
       "valid": true
     },

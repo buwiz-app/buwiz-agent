@@ -211,6 +211,10 @@ pub struct Envelope {
     /// established a caller, and every press is refused.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub caller: Option<Caller>,
+    /// The Bot whose turn this is, set by the host. It only narrows: a host
+    /// refuses a screen another Bot's chat opened. Absent in a plain chat.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub bot: Option<String>,
     /// HMAC-SHA256(token, session nonce) as lowercase hex. Never the raw token.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub auth: Option<String>,
@@ -225,6 +229,7 @@ impl Envelope {
             id: id.into(),
             target,
             caller: None,
+            bot: None,
             auth: None,
             op,
         }
@@ -238,6 +243,7 @@ impl fmt::Debug for Envelope {
             .field("id", &self.id)
             .field("target", &self.target)
             .field("caller", &self.caller)
+            .field("bot", &self.bot)
             .field("auth", &self.auth.as_ref().map(|_| "<redacted>"))
             .field("op", &self.op)
             .finish()
