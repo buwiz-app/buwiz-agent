@@ -93,8 +93,20 @@
         "approved_by": {
           "$ref": "#/$defs/ActorId"
         },
+        "args_hash": {
+          "$ref": "#/$defs/ContentHash",
+          "description": "The arguments the person saw."
+        },
+        "at": {
+          "$ref": "#/$defs/SafeU64",
+          "description": "When they said yes, in milliseconds since the Unix epoch."
+        },
         "once": {
           "$ref": "#/$defs/OnceId"
+        },
+        "shown_hash": {
+          "$ref": "#/$defs/ContentHash",
+          "description": "The card the person saw."
         },
         "target": {
           "$ref": "#/$defs/Target"
@@ -104,7 +116,10 @@
         "target",
         "action",
         "once",
-        "approved_by"
+        "approved_by",
+        "args_hash",
+        "shown_hash",
+        "at"
       ],
       "type": "object"
     },
@@ -800,6 +815,13 @@
       "properties": {
         "auth": {
           "description": "HMAC-SHA256(token, session nonce) as lowercase hex. Never the raw token.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "bot": {
+          "description": "The Bot whose turn this is, set by the host. It only narrows: a host\nrefuses a screen another Bot's chat opened. Absent in a plain chat.",
           "type": [
             "string",
             "null"
@@ -1502,6 +1524,17 @@
       "additionalProperties": false,
       "description": "The press being decided, as the host knows it.",
       "properties": {
+        "args_hash": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ContentHash"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The arguments about to go out. Absent means no open press."
+        },
         "effect": {
           "$ref": "#/$defs/Effect"
         },
@@ -1518,6 +1551,17 @@
             }
           ],
           "description": "The open press's one-time id. Absent when the host has no open press\nfor this action."
+        },
+        "shown_hash": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ContentHash"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "What the card shows now. Absent means no open press."
         },
         "target": {
           "$ref": "#/$defs/Target"
@@ -1558,12 +1602,21 @@
             "approved_by": {
               "$ref": "#/$defs/ActorId"
             },
+            "args_hash": {
+              "$ref": "#/$defs/ContentHash"
+            },
+            "at": {
+              "$ref": "#/$defs/SafeU64"
+            },
             "by": {
               "const": "ai_approved",
               "type": "string"
             },
             "once": {
               "$ref": "#/$defs/OnceId"
+            },
+            "shown_hash": {
+              "$ref": "#/$defs/ContentHash"
             },
             "who": {
               "$ref": "#/$defs/ActorId"
@@ -1573,7 +1626,10 @@
             "by",
             "who",
             "approved_by",
-            "once"
+            "once",
+            "args_hash",
+            "shown_hash",
+            "at"
           ],
           "type": "object"
         },
@@ -1688,6 +1744,21 @@
         {
           "const": "approval_wrong_press",
           "description": "The approval is for another press of this action, such as a used one.",
+          "type": "string"
+        },
+        {
+          "const": "approval_wrong_args",
+          "description": "The approval is for other arguments.",
+          "type": "string"
+        },
+        {
+          "const": "approval_wrong_shown",
+          "description": "The approval is for another card than the one showing now.",
+          "type": "string"
+        },
+        {
+          "const": "filing_not_for_agents",
+          "description": "The AI reached for a filing: no approval covers one.",
           "type": "string"
         }
       ]

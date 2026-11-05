@@ -1,5 +1,6 @@
 //! Who pressed, and whether they may (D1). The AI may press a person-only
-//! action only after the person approves that one press.
+//! action only after the person approves that one press, and never a filing
+//! (O4): that stays a person's own act, approved or not.
 //!
 //! [`authorize_press`] decides and holds no state, so its answer is only as
 //! good as what the host gives it:
@@ -13,6 +14,11 @@
 //!   the answer is [`PressedBy::AiApproved`], the host retires the id.
 //!   That is what stops the same approval from working twice: the next
 //!   press has a different id, or none.
+//! - The host hashes the arguments it is about to send, and what the card
+//!   shows now, into [`PressAction::args_hash`] and
+//!   [`PressAction::shown_hash`]. An [`Approval`] carries the two hashes the
+//!   person's yes was given to, so any other values are refused. The args
+//!   hash is `sha256:` over the arguments' JCS (RFC 8785) bytes.
 
 use std::fmt;
 
@@ -21,7 +27,7 @@ use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use ts_rs::TS;
 
-use crate::ids::{ActorId, AgentId, OnceId, Target};
+use crate::ids::{ActorId, AgentId, ContentHash, OnceId, SafeU64, Target};
 use crate::tool::Effect;
 
 /// The person's yes to exactly one press.
@@ -32,6 +38,12 @@ pub struct Approval {
     pub action: AgentId,
     pub once: OnceId,
     pub approved_by: ActorId,
+    /// The arguments the person saw.
+    pub args_hash: ContentHash,
+    /// The card the person saw.
+    pub shown_hash: ContentHash,
+    /// When they said yes, in milliseconds since the Unix epoch.
+    pub at: SafeU64,
 }
 
 /// Who is pressing.
@@ -63,6 +75,12 @@ pub struct PressAction {
     /// for this action.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub once: Option<OnceId>,
+    /// The arguments about to go out. Absent means no open press.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub args_hash: Option<ContentHash>,
+    /// What the card shows now. Absent means no open press.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub shown_hash: Option<ContentHash>,
 }
 
 /// Whose press this was, to show and to log.
@@ -77,6 +95,9 @@ pub enum PressedBy {
         who: ActorId,
         approved_by: ActorId,
         once: OnceId,
+        args_hash: ContentHash,
+        shown_hash: ContentHash,
+        at: SafeU64,
     },
     /// The AI pressed something that needs no person.
     Ai { who: ActorId },
@@ -116,6 +137,12 @@ pub enum Refused {
     NoOpenPress,
     /// The approval is for another press of this action, such as a used one.
     ApprovalWrongPress,
+    /// The approval is for other arguments.
+    ApprovalWrongArgs,
+    /// The approval is for another card than the one showing now.
+    ApprovalWrongShown,
+    /// The AI reached for a filing: no approval covers one.
+    FilingNotForAgents,
 }
 
 impl Refused {
@@ -131,6 +158,9 @@ impl Refused {
             Self::ApprovalWrongAction => "approval_wrong_action",
             Self::NoOpenPress => "no_open_press",
             Self::ApprovalWrongPress => "approval_wrong_press",
+            Self::ApprovalWrongArgs => "approval_wrong_args",
+            Self::ApprovalWrongShown => "approval_wrong_shown",
+            Self::FilingNotForAgents => "filing_not_for_agents",
         }
     }
 }
@@ -155,6 +185,9 @@ pub fn authorize_press(
     let pressed = match caller {
         Caller::Person { who } if !is_person(who) => return Err(Refused::UnknownCaller),
         Caller::Person { who } => PressedBy::Person { who: who.clone() },
+        Caller::Agent { .. } if action.effect == Effect::File => {
+            return Err(Refused::FilingNotForAgents);
+        }
         Caller::Agent { who, .. } if !action.effect.needs_person() => {
             PressedBy::Ai { who: who.clone() }
         }
@@ -177,10 +210,21 @@ pub fn authorize_press(
             if approval.once != *once {
                 return Err(Refused::ApprovalWrongPress);
             }
+            let args_hash = action.args_hash.as_ref().ok_or(Refused::NoOpenPress)?;
+            if approval.args_hash != *args_hash {
+                return Err(Refused::ApprovalWrongArgs);
+            }
+            let shown_hash = action.shown_hash.as_ref().ok_or(Refused::NoOpenPress)?;
+            if approval.shown_hash != *shown_hash {
+                return Err(Refused::ApprovalWrongShown);
+            }
             PressedBy::AiApproved {
                 who: who.clone(),
                 approved_by: approval.approved_by.clone(),
                 once: once.clone(),
+                args_hash: args_hash.clone(),
+                shown_hash: shown_hash.clone(),
+                at: approval.at,
             }
         }
     };

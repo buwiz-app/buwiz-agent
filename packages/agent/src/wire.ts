@@ -175,6 +175,9 @@ export const parseApproval = object<Approval>("Approval", {
   action: required(parseAgentId),
   once: required(parseOnceId),
   approved_by: required(parseActorId),
+  args_hash: required(parseContentHash),
+  shown_hash: required(parseContentHash),
+  at: required(parseSafeU64),
 });
 
 export const parseCaller = tagged<Caller>("Caller", "kind", {
@@ -188,11 +191,20 @@ export const parsePressAction = object<PressAction>("PressAction", {
   id: required(parseAgentId),
   effect: required(effect),
   once: optional(parseOnceId),
+  args_hash: optional(parseContentHash),
+  shown_hash: optional(parseContentHash),
 });
 
 export const parsePressedBy = tagged<PressedBy>("PressedBy", "by", {
   person: { who: required(parseActorId) },
-  ai_approved: { who: required(parseActorId), approved_by: required(parseActorId), once: required(parseOnceId) },
+  ai_approved: {
+    who: required(parseActorId),
+    approved_by: required(parseActorId),
+    once: required(parseOnceId),
+    args_hash: required(parseContentHash),
+    shown_hash: required(parseContentHash),
+    at: required(parseSafeU64),
+  },
   ai: { who: required(parseActorId) },
   routine: { who: required(parseActorId) },
 });
@@ -280,7 +292,7 @@ const OPS: Record<string, Fields> = {
   },
 };
 
-const ENVELOPE_FIELDS: Fields = { v: required(version), id: required(text), target, caller: optional(parseCaller), auth: optional(text) };
+const ENVELOPE_FIELDS: Fields = { v: required(version), id: required(text), target, caller: optional(parseCaller), bot: optional(text), auth: optional(text) };
 
 export const parseOp = tagged<Op>("Op", "op", OPS);
 

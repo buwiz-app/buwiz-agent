@@ -16,6 +16,8 @@ fn a_missing_action_or_caller_is_refused() {
         id: AgentId::parse("ledger.post").unwrap(),
         effect: Effect::Write,
         once: None,
+        args_hash: None,
+        shown_hash: None,
     };
     assert_eq!(
         authorize_press(None, Some(&caller)),

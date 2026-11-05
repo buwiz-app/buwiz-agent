@@ -99,7 +99,9 @@
         "target": "books",
         "id": "ledger.post",
         "effect": "write",
-        "once": "press-0001"
+        "once": "press-0001",
+        "args_hash": "sha256:a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+        "shown_hash": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2"
       },
       "caller": {
         "kind": "person",
@@ -123,7 +125,9 @@
         "target": "books",
         "id": "ledger.post",
         "effect": "write",
-        "once": "press-0001"
+        "once": "press-0001",
+        "args_hash": "sha256:a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+        "shown_hash": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2"
       },
       "caller": {
         "kind": "agent",
@@ -132,7 +136,10 @@
           "target": "books",
           "action": "ledger.post",
           "once": "press-0001",
-          "approved_by": "person.owner"
+          "approved_by": "person.owner",
+          "args_hash": "sha256:a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+          "shown_hash": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2",
+          "at": 1793745245000
         }
       },
       "expect": {
@@ -144,18 +151,23 @@
             "by": "ai_approved",
             "who": "agent.broker",
             "approved_by": "person.owner",
-            "once": "press-0001"
+            "once": "press-0001",
+            "args_hash": "sha256:a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+            "shown_hash": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2",
+            "at": 1793745245000
           }
         }
       }
     },
     {
-      "name": "the AI presses File with its approval",
+      "name": "no approval lets the AI press File",
       "action": {
         "target": "books",
         "id": "return.file",
         "effect": "file",
-        "once": "press-0001"
+        "once": "press-0001",
+        "args_hash": "sha256:a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+        "shown_hash": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2"
       },
       "caller": {
         "kind": "agent",
@@ -164,21 +176,14 @@
           "target": "books",
           "action": "return.file",
           "once": "press-0001",
-          "approved_by": "person.owner"
+          "approved_by": "person.owner",
+          "args_hash": "sha256:a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+          "shown_hash": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2",
+          "at": 1793745245000
         }
       },
       "expect": {
-        "allowed": {
-          "target": "books",
-          "action": "return.file",
-          "effect": "file",
-          "pressed": {
-            "by": "ai_approved",
-            "who": "agent.broker",
-            "approved_by": "person.owner",
-            "once": "press-0001"
-          }
-        }
+        "refused": "filing_not_for_agents"
       }
     },
     {
@@ -287,7 +292,10 @@
           "target": "sheet",
           "action": "other.action",
           "once": "press-0001",
-          "approved_by": "person.owner"
+          "approved_by": "person.owner",
+          "args_hash": "sha256:a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+          "shown_hash": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2",
+          "at": 1793745245000
         }
       },
       "expect": {
@@ -308,7 +316,9 @@
         "target": "books",
         "id": "ledger.post",
         "effect": "write",
-        "once": "press-0001"
+        "once": "press-0001",
+        "args_hash": "sha256:a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+        "shown_hash": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2"
       },
       "caller": {
         "kind": "agent",
@@ -324,7 +334,9 @@
         "target": "books",
         "id": "ledger.post",
         "effect": "write",
-        "once": "press-0001"
+        "once": "press-0001",
+        "args_hash": "sha256:a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+        "shown_hash": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2"
       },
       "caller": {
         "kind": "routine",
@@ -335,19 +347,21 @@
       }
     },
     {
-      "name": "the AI has no approval for a file action",
+      "name": "the AI reaches for a file action with no approval",
       "action": {
         "target": "books",
         "id": "ledger.post",
         "effect": "file",
-        "once": "press-0001"
+        "once": "press-0001",
+        "args_hash": "sha256:a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+        "shown_hash": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2"
       },
       "caller": {
         "kind": "agent",
         "who": "agent.broker"
       },
       "expect": {
-        "refused": "approval_missing"
+        "refused": "filing_not_for_agents"
       }
     },
     {
@@ -356,7 +370,9 @@
         "target": "books",
         "id": "ledger.post",
         "effect": "file",
-        "once": "press-0001"
+        "once": "press-0001",
+        "args_hash": "sha256:a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+        "shown_hash": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2"
       },
       "caller": {
         "kind": "routine",
@@ -372,7 +388,9 @@
         "target": "books",
         "id": "ledger.post",
         "effect": "write",
-        "once": "press-0001"
+        "once": "press-0001",
+        "args_hash": "sha256:a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+        "shown_hash": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2"
       },
       "caller": {
         "kind": "agent",
@@ -389,7 +407,9 @@
         "target": "books",
         "id": "month.close",
         "effect": "write",
-        "once": "press-0001"
+        "once": "press-0001",
+        "args_hash": "sha256:a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+        "shown_hash": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2"
       },
       "caller": {
         "kind": "agent",
@@ -398,7 +418,10 @@
           "target": "books",
           "action": "ledger.post",
           "once": "press-0001",
-          "approved_by": "person.owner"
+          "approved_by": "person.owner",
+          "args_hash": "sha256:a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+          "shown_hash": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2",
+          "at": 1793745245000
         }
       },
       "expect": {
@@ -411,7 +434,9 @@
         "target": "ebirforms",
         "id": "ledger.post",
         "effect": "write",
-        "once": "press-0001"
+        "once": "press-0001",
+        "args_hash": "sha256:a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+        "shown_hash": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2"
       },
       "caller": {
         "kind": "agent",
@@ -420,7 +445,10 @@
           "target": "books",
           "action": "ledger.post",
           "once": "press-0001",
-          "approved_by": "person.owner"
+          "approved_by": "person.owner",
+          "args_hash": "sha256:a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+          "shown_hash": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2",
+          "at": 1793745245000
         }
       },
       "expect": {
@@ -433,7 +461,9 @@
         "target": "ebirforms",
         "id": "month.close",
         "effect": "write",
-        "once": "press-0001"
+        "once": "press-0001",
+        "args_hash": "sha256:a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+        "shown_hash": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2"
       },
       "caller": {
         "kind": "agent",
@@ -442,7 +472,10 @@
           "target": "books",
           "action": "ledger.post",
           "once": "press-0001",
-          "approved_by": "person.owner"
+          "approved_by": "person.owner",
+          "args_hash": "sha256:a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+          "shown_hash": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2",
+          "at": 1793745245000
         }
       },
       "expect": {
@@ -455,7 +488,9 @@
         "target": "books",
         "id": "ledger.post",
         "effect": "write",
-        "once": "press-0002"
+        "once": "press-0002",
+        "args_hash": "sha256:a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+        "shown_hash": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2"
       },
       "caller": {
         "kind": "agent",
@@ -464,7 +499,10 @@
           "target": "books",
           "action": "ledger.post",
           "once": "press-0001",
-          "approved_by": "person.owner"
+          "approved_by": "person.owner",
+          "args_hash": "sha256:a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+          "shown_hash": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2",
+          "at": 1793745245000
         }
       },
       "expect": {
@@ -485,7 +523,10 @@
           "target": "books",
           "action": "ledger.post",
           "once": "press-0001",
-          "approved_by": "person.owner"
+          "approved_by": "person.owner",
+          "args_hash": "sha256:a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+          "shown_hash": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2",
+          "at": 1793745245000
         }
       },
       "expect": {
@@ -507,7 +548,10 @@
           "target": "books",
           "action": "ledger.post",
           "once": "press-0001",
-          "approved_by": "person.owner"
+          "approved_by": "person.owner",
+          "args_hash": "sha256:a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+          "shown_hash": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2",
+          "at": 1793745245000
         }
       },
       "expect": {
@@ -520,7 +564,9 @@
         "target": "books",
         "id": "ledger.post",
         "effect": "write",
-        "once": "press-0001"
+        "once": "press-0001",
+        "args_hash": "sha256:a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+        "shown_hash": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2"
       },
       "caller": {
         "kind": "routine",
@@ -529,7 +575,10 @@
           "target": "books",
           "action": "ledger.post",
           "once": "press-0001",
-          "approved_by": "person.owner"
+          "approved_by": "person.owner",
+          "args_hash": "sha256:a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+          "shown_hash": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2",
+          "at": 1793745245000
         }
       },
       "expect": {
@@ -542,7 +591,9 @@
         "target": "books",
         "id": "ledger.post",
         "effect": "write",
-        "once": "press-0001"
+        "once": "press-0001",
+        "args_hash": "sha256:a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+        "shown_hash": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2"
       },
       "caller": {
         "kind": "person",
@@ -551,7 +602,10 @@
           "target": "books",
           "action": "ledger.post",
           "once": "press-0001",
-          "approved_by": "person.owner"
+          "approved_by": "person.owner",
+          "args_hash": "sha256:a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+          "shown_hash": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2",
+          "at": 1793745245000
         }
       },
       "expect": {
@@ -688,7 +742,10 @@
           "target": "books",
           "action": "ledger.post",
           "once": "press-0001",
-          "approved_by": "person.owner"
+          "approved_by": "person.owner",
+          "args_hash": "sha256:a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+          "shown_hash": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2",
+          "at": 1793745245000
         }
       },
       "expect": {
@@ -836,7 +893,9 @@
         "target": "books",
         "id": "ledger.post",
         "effect": "write",
-        "once": "press-0001"
+        "once": "press-0001",
+        "args_hash": "sha256:a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+        "shown_hash": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2"
       },
       "caller": {
         "kind": "agent",
@@ -845,7 +904,10 @@
           "target": "books",
           "action": "ledger.post",
           "once": "press-0001",
-          "approved_by": "person.owner"
+          "approved_by": "person.owner",
+          "args_hash": "sha256:a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+          "shown_hash": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2",
+          "at": 1793745245000
         }
       },
       "expect": {
@@ -858,7 +920,9 @@
         "target": "books",
         "id": "ledger.post",
         "effect": "write",
-        "once": "press-0001"
+        "once": "press-0001",
+        "args_hash": "sha256:a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+        "shown_hash": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2"
       },
       "caller": {
         "kind": "agent",
@@ -879,7 +943,9 @@
         "target": "books",
         "id": "ledger.post",
         "effect": "write",
-        "once": "press-0001"
+        "once": "press-0001",
+        "args_hash": "sha256:a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+        "shown_hash": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2"
       },
       "caller": {
         "kind": "agent",
@@ -900,7 +966,9 @@
         "target": "books",
         "id": "ledger.post",
         "effect": "write",
-        "once": "press-0001"
+        "once": "press-0001",
+        "args_hash": "sha256:a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+        "shown_hash": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2"
       },
       "caller": {
         "kind": "agent",
@@ -910,7 +978,10 @@
           "action": "ledger.post",
           "once": "press-0001",
           "approved_by": "person.owner",
-          "all": true
+          "all": true,
+          "args_hash": "sha256:a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+          "shown_hash": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2",
+          "at": 1793745245000
         }
       },
       "expect": {
@@ -923,7 +994,9 @@
         "target": "books",
         "id": "ledger.post",
         "effect": "write",
-        "once": "press-0001"
+        "once": "press-0001",
+        "args_hash": "sha256:a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+        "shown_hash": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2"
       },
       "caller": {
         "kind": "agent",
@@ -932,7 +1005,10 @@
           "target": "books",
           "action": "ledger.post",
           "once": "press-0001",
-          "approved_by": "agent.broker"
+          "approved_by": "agent.broker",
+          "args_hash": "sha256:a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+          "shown_hash": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2",
+          "at": 1793745245000
         }
       },
       "expect": {
@@ -945,7 +1021,9 @@
         "target": "books",
         "id": "ledger.post",
         "effect": "write",
-        "once": "press-0001"
+        "once": "press-0001",
+        "args_hash": "sha256:a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+        "shown_hash": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2"
       },
       "caller": {
         "kind": "agent",
@@ -954,7 +1032,10 @@
           "target": "books",
           "action": "ledger.post",
           "once": "press-0001",
-          "approved_by": "routine.month-end"
+          "approved_by": "routine.month-end",
+          "args_hash": "sha256:a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+          "shown_hash": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2",
+          "at": 1793745245000
         }
       },
       "expect": {
@@ -967,7 +1048,9 @@
         "target": "books",
         "id": "ledger.post",
         "effect": "write",
-        "once": "press-0001"
+        "once": "press-0001",
+        "args_hash": "sha256:a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+        "shown_hash": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2"
       },
       "caller": {
         "kind": "agent",
@@ -976,7 +1059,10 @@
           "target": "books",
           "action": "ledger.post",
           "once": "press-0001",
-          "approved_by": "personal.owner"
+          "approved_by": "personal.owner",
+          "args_hash": "sha256:a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+          "shown_hash": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2",
+          "at": 1793745245000
         }
       },
       "expect": {
@@ -989,7 +1075,9 @@
         "target": "books",
         "id": "ledger.post",
         "effect": "write",
-        "once": "press-0001"
+        "once": "press-0001",
+        "args_hash": "sha256:a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+        "shown_hash": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2"
       },
       "caller": {
         "kind": "person",
@@ -1009,6 +1097,218 @@
       "caller": {
         "kind": "person",
         "who": "agent.broker"
+      },
+      "expect": {
+        "refused": "unknown_caller"
+      }
+    },
+    {
+      "name": "an approval for other arguments",
+      "action": {
+        "target": "books",
+        "id": "ledger.post",
+        "effect": "write",
+        "once": "press-0001",
+        "args_hash": "sha256:c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3",
+        "shown_hash": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2"
+      },
+      "caller": {
+        "kind": "agent",
+        "who": "agent.broker",
+        "approval": {
+          "target": "books",
+          "action": "ledger.post",
+          "once": "press-0001",
+          "approved_by": "person.owner",
+          "args_hash": "sha256:a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+          "shown_hash": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2",
+          "at": 1793745245000
+        }
+      },
+      "expect": {
+        "refused": "approval_wrong_args"
+      }
+    },
+    {
+      "name": "an approval for another card",
+      "action": {
+        "target": "books",
+        "id": "ledger.post",
+        "effect": "write",
+        "once": "press-0001",
+        "args_hash": "sha256:a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+        "shown_hash": "sha256:c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3"
+      },
+      "caller": {
+        "kind": "agent",
+        "who": "agent.broker",
+        "approval": {
+          "target": "books",
+          "action": "ledger.post",
+          "once": "press-0001",
+          "approved_by": "person.owner",
+          "args_hash": "sha256:a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+          "shown_hash": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2",
+          "at": 1793745245000
+        }
+      },
+      "expect": {
+        "refused": "approval_wrong_shown"
+      }
+    },
+    {
+      "name": "other arguments are checked before the card",
+      "action": {
+        "target": "books",
+        "id": "ledger.post",
+        "effect": "write",
+        "once": "press-0001",
+        "args_hash": "sha256:c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3",
+        "shown_hash": "sha256:c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3c3"
+      },
+      "caller": {
+        "kind": "agent",
+        "who": "agent.broker",
+        "approval": {
+          "target": "books",
+          "action": "ledger.post",
+          "once": "press-0001",
+          "approved_by": "person.owner",
+          "args_hash": "sha256:a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+          "shown_hash": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2",
+          "at": 1793745245000
+        }
+      },
+      "expect": {
+        "refused": "approval_wrong_args"
+      }
+    },
+    {
+      "name": "an open press with no args hash",
+      "action": {
+        "target": "books",
+        "id": "ledger.post",
+        "effect": "write",
+        "once": "press-0001",
+        "shown_hash": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2"
+      },
+      "caller": {
+        "kind": "agent",
+        "who": "agent.broker",
+        "approval": {
+          "target": "books",
+          "action": "ledger.post",
+          "once": "press-0001",
+          "approved_by": "person.owner",
+          "args_hash": "sha256:a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+          "shown_hash": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2",
+          "at": 1793745245000
+        }
+      },
+      "expect": {
+        "refused": "no_open_press"
+      }
+    },
+    {
+      "name": "an open press with no shown hash",
+      "action": {
+        "target": "books",
+        "id": "ledger.post",
+        "effect": "write",
+        "once": "press-0001",
+        "args_hash": "sha256:a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1"
+      },
+      "caller": {
+        "kind": "agent",
+        "who": "agent.broker",
+        "approval": {
+          "target": "books",
+          "action": "ledger.post",
+          "once": "press-0001",
+          "approved_by": "person.owner",
+          "args_hash": "sha256:a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+          "shown_hash": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2",
+          "at": 1793745245000
+        }
+      },
+      "expect": {
+        "refused": "no_open_press"
+      }
+    },
+    {
+      "name": "an approval with no args hash",
+      "action": {
+        "target": "books",
+        "id": "ledger.post",
+        "effect": "write",
+        "once": "press-0001",
+        "args_hash": "sha256:a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+        "shown_hash": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2"
+      },
+      "caller": {
+        "kind": "agent",
+        "who": "agent.broker",
+        "approval": {
+          "target": "books",
+          "action": "ledger.post",
+          "once": "press-0001",
+          "approved_by": "person.owner",
+          "shown_hash": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2",
+          "at": 1793745245000
+        }
+      },
+      "expect": {
+        "refused": "unknown_caller"
+      }
+    },
+    {
+      "name": "an approval with no time",
+      "action": {
+        "target": "books",
+        "id": "ledger.post",
+        "effect": "write",
+        "once": "press-0001",
+        "args_hash": "sha256:a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+        "shown_hash": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2"
+      },
+      "caller": {
+        "kind": "agent",
+        "who": "agent.broker",
+        "approval": {
+          "target": "books",
+          "action": "ledger.post",
+          "once": "press-0001",
+          "approved_by": "person.owner",
+          "args_hash": "sha256:a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+          "shown_hash": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2"
+        }
+      },
+      "expect": {
+        "refused": "unknown_caller"
+      }
+    },
+    {
+      "name": "an approval with a bad args hash",
+      "action": {
+        "target": "books",
+        "id": "ledger.post",
+        "effect": "write",
+        "once": "press-0001",
+        "args_hash": "sha256:a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+        "shown_hash": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2"
+      },
+      "caller": {
+        "kind": "agent",
+        "who": "agent.broker",
+        "approval": {
+          "target": "books",
+          "action": "ledger.post",
+          "once": "press-0001",
+          "approved_by": "person.owner",
+          "args_hash": "abc",
+          "shown_hash": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2",
+          "at": 1793745245000
+        }
       },
       "expect": {
         "refused": "unknown_caller"

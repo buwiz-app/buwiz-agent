@@ -34,6 +34,7 @@ const isPerson = (who: string): boolean => who.startsWith("person.");
 const decide = (action: PressAction, caller: Caller): PressedBy | Refused => {
   const { who } = caller;
   if (caller.kind === "person") return isPerson(who) ? { by: "person", who } : "unknown_caller";
+  if (caller.kind === "agent" && action.effect === "file") return "filing_not_for_agents";
   if (!needsPerson(action.effect)) return caller.kind === "agent" ? { by: "ai", who } : { by: "routine", who };
   if (caller.kind === "routine") return "routine_needs_person";
   const { approval } = caller;
@@ -43,7 +44,12 @@ const decide = (action: PressAction, caller: Caller): PressedBy | Refused => {
   if (approval.action !== action.id) return "approval_wrong_action";
   if (action.once === undefined) return "no_open_press";
   if (approval.once !== action.once) return "approval_wrong_press";
-  return { by: "ai_approved", who, approved_by: approval.approved_by, once: action.once };
+  if (action.args_hash === undefined) return "no_open_press";
+  if (approval.args_hash !== action.args_hash) return "approval_wrong_args";
+  if (action.shown_hash === undefined) return "no_open_press";
+  if (approval.shown_hash !== action.shown_hash) return "approval_wrong_shown";
+  const { args_hash, shown_hash, at, approved_by } = approval;
+  return { by: "ai_approved", who, approved_by, once: action.once, args_hash, shown_hash, at };
 };
 
 /**

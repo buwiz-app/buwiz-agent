@@ -124,7 +124,19 @@ export type ToolSpec = { target: Target, name: AgentId, about?: string, effect: 
 /**
  * The person's yes to exactly one press.
  */
-export type Approval = { target: Target, action: AgentId, once: OnceId, approved_by: ActorId, };
+export type Approval = { target: Target, action: AgentId, once: OnceId, approved_by: ActorId, 
+/**
+ * The arguments the person saw.
+ */
+args_hash: ContentHash, 
+/**
+ * The card the person saw.
+ */
+shown_hash: ContentHash, 
+/**
+ * When they said yes, in milliseconds since the Unix epoch.
+ */
+at: SafeU64, };
 
 /**
  * Who is pressing.
@@ -139,12 +151,20 @@ export type PressAction = { target: Target, id: AgentId, effect: Effect,
  * The open press's one-time id. Absent when the host has no open press
  * for this action.
  */
-once?: OnceId, };
+once?: OnceId, 
+/**
+ * The arguments about to go out. Absent means no open press.
+ */
+args_hash?: ContentHash, 
+/**
+ * What the card shows now. Absent means no open press.
+ */
+shown_hash?: ContentHash, };
 
 /**
  * Whose press this was, to show and to log.
  */
-export type PressedBy = { "by": "person", who: ActorId, } | { "by": "ai_approved", who: ActorId, approved_by: ActorId, once: OnceId, } | { "by": "ai", who: ActorId, } | { "by": "routine", who: ActorId, };
+export type PressedBy = { "by": "person", who: ActorId, } | { "by": "ai_approved", who: ActorId, approved_by: ActorId, once: OnceId, args_hash: ContentHash, shown_hash: ContentHash, at: SafeU64, } | { "by": "ai", who: ActorId, } | { "by": "routine", who: ActorId, };
 
 /**
  * A press that may go ahead.
@@ -154,7 +174,7 @@ export type Allowed = { target: Target, action: AgentId, effect: Effect, pressed
 /**
  * Why a press may not go ahead.
  */
-export type Refused = "unknown_action" | "unknown_caller" | "routine_needs_person" | "approval_missing" | "approval_not_person" | "approval_wrong_target" | "approval_wrong_action" | "no_open_press" | "approval_wrong_press";
+export type Refused = "unknown_action" | "unknown_caller" | "routine_needs_person" | "approval_missing" | "approval_not_person" | "approval_wrong_target" | "approval_wrong_action" | "no_open_press" | "approval_wrong_press" | "approval_wrong_args" | "approval_wrong_shown" | "filing_not_for_agents";
 
 /**
  * Which runtime is answering.
@@ -242,6 +262,11 @@ export type Envelope = { v: Version, id: string, target: Target,
  * established a caller, and every press is refused.
  */
 caller?: Caller, 
+/**
+ * The Bot whose turn this is, set by the host. It only narrows: a host
+ * refuses a screen another Bot's chat opened. Absent in a plain chat.
+ */
+bot?: string, 
 /**
  * HMAC-SHA256(token, session nonce) as lowercase hex. Never the raw token.
  */
